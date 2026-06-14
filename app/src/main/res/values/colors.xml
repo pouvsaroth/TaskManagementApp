@@ -2,4 +2,21 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="nav_unselected">#5A6E72</color>
+    <color name="nav_selected">#007FA3</color>
+    <color name="nav_divider_top">#E0E0E0</color>
+    <color name="nav_bottom_baseline">#212121</color>
+    <color name="nav_background">#FFFFFF</color>
+    <color name="nav_icon_unselected">#666666</color>
+    <color name="brand_blue">#0288D1</color> <color name="text_muted">#888888</color>
+
+    <color name="card_background_color">#F8F9FA</color>
+
+    <color name="bg_icon_blue_dark">#E8F4F8</color>
+    <color name="bg_icon_green_dark">#EAF7EE</color>
+    <color name="bg_icon_orange_dark">#FEF6EC</color>
+    <color name="bg_icon_red_dark">#FCEBEB</color>
+    <color name="progress_remaining_color">#F0F2F5</color>
+    <color name="progress_track_color">#F0F2F5</color>
+    <color name="app_main_background">#FFFFFF</color>
 </resources>

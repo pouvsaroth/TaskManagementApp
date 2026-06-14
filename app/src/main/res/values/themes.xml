@@ -1,9 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
+<!--    <style name="Theme.TaskManagementApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">-->
+<!--        <item name="android:windowBackground">#F8F9FA</item>-->
+<!--        <item name="colorSurface">#FFFFFF</item>-->
+<!--        <item name="editTextColor">#1A1A1A</item>-->
+<!--        <item name="colorSecondary">#EAEAEA</item> -->
+<!--    </style>-->
+    <style name="Theme.TaskManagementApp" parent="Base.Theme.TaskManagementApp"  />
     <style name="Base.Theme.TaskManagementApp" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        <item name="colorContainer">@android:color/transparent</item>
     </style>
-
-    <style name="Theme.TaskManagementApp" parent="Base.Theme.TaskManagementApp" />
 </resources>
