@@ -9,5 +9,38 @@
     <style name="Theme.TaskManagementApp" parent="Base.Theme.TaskManagementApp"  />
     <style name="Base.Theme.TaskManagementApp" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="colorContainer">@android:color/transparent</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorPrimary">@color/nav_selected</item>
+        <item name="colorPrimaryVariant">@color/nav_selected</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/nav_selected</item>
+        <item name="colorSecondaryVariant">@color/nav_selected</item>
+        <item name="colorOnSecondary">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorAccent">@color/nav_selected</item>
+        <item name="colorControlActivated">@color/nav_selected</item>
+    </style>
+
+    <style name="CalendarWeekdayStyle">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_muted</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="Theme.TaskManagementApp.BottomSheetDialog" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheetStyle</item>
+    </style>
+
+    <style name="CustomBottomSheetStyle" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="ShapeAppearance.App.FAB" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">50%</item>
     </style>
 </resources>

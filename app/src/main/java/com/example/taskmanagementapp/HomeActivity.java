@@ -24,8 +24,10 @@ public class HomeActivity extends AppCompatActivity {
                 if (itemId == R.id.nav_home) {
                     return true;
                 } else if (itemId == R.id.nav_tasks) {
-                    Toast.makeText(HomeActivity.this, "Tasks screen is coming soon!", Toast.LENGTH_SHORT).show();
-                    return false;
+                    Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
                 } else if (itemId == R.id.nav_settings) {
                     // បើកទៅកាន់អេក្រង់ SettingsActivity វិញ
                     Intent intent = new Intent(HomeActivity.this, SettingsActivity.class);

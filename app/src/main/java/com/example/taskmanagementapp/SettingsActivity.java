@@ -131,8 +131,10 @@ public class SettingsActivity extends AppCompatActivity {
                     finish();
                     return true;
                 } else if (itemId == R.id.nav_tasks) {
-                    Toast.makeText(SettingsActivity.this, "Tasks screen is coming soon!", Toast.LENGTH_SHORT).show();
-                    return false;
+                    Intent intent = new Intent(SettingsActivity.this, TaskActivity.class);
+                    startActivity(intent);
+                    finish();
+                    return true;
                 } else if (itemId == R.id.nav_settings) {
                     return true;
                 }
