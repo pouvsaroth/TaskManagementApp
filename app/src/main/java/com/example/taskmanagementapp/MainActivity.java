@@ -1,9 +1,11 @@
 package com.example.taskmanagementapp;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
@@ -12,19 +14,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        // Match status bar with splash background
+        getWindow().setStatusBarColor(Color.parseColor("#1E8CB8"));
+        getWindow().getDecorView().setSystemUiVisibility(0); // Reset light status bar
+        
         setContentView(R.layout.activity_main);
 
-        // ប្រើប្រាស់ Handler ដើម្បីរង់ចាំ ៣ វិនាទី រួចប្តូរទៅកាន់ផ្ទាំង HomeActivity ស្វ័យប្រវត្តិ
         new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                // នៅក្នុងផ្នែក Handler run() នៃ MainActivity.java
-                Intent intent = new Intent(MainActivity.this, HomeActivity.class);
+                Intent intent = new Intent(MainActivity.this, TaskActivity.class);
                 startActivity(intent);
-                finish();
-
-
                 finish();
             }
         }, SPLASH_TIME_OUT);

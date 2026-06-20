@@ -1,0 +1,14 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+    <!-- Teal Background with smooth rounded corners -->
+    <path
+        android:fillColor="#007FA3"
+        android:pathData="M7,3h10c2.21,0 4,1.79 4,4v10c0,2.21 -1.79,4 -4,4H7c-2.21,0 -4,-1.79 -4,-4V7c0,-2.21 1.79,-4 4,-4z" />
+    <!-- White Tick - Improved path -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M9,16.17L4.83,12l-1.42,1.41L9,19 21,7l-1.41,-1.41L9,16.17z" />
+</vector>

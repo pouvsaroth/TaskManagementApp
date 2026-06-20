@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginHorizontal="2dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="0dp"
+    app:cardBackgroundColor="@color/card_background_color">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:background="@drawable/bg_task_card">
+
+        <CheckBox
+            android:id="@+id/taskCheckbox"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:button="@null"
+            android:background="@drawable/custom_checkbox"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/taskTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Review project proposal"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginStart="12dp"
+            app:layout_constraintStart_toEndOf="@id/taskCheckbox"
+            app:layout_constraintEnd_toStartOf="@id/menuIcon"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/ivCalendarIcon"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/ic_calendar"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@id/taskCheckbox"
+            app:layout_constraintTop_toBottomOf="@id/taskTitle"
+            app:tint="@color/text_muted" />
+
+        <TextView
+            android:id="@+id/taskDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Today, 2:00 PM"
+            android:textSize="12sp"
+            android:textColor="@color/text_muted"
+            android:layout_marginStart="4dp"
+            app:layout_constraintStart_toEndOf="@id/ivCalendarIcon"
+            app:layout_constraintTop_toTopOf="@id/ivCalendarIcon"
+            app:layout_constraintBottom_toBottomOf="@id/ivCalendarIcon" />
+
+        <TextView
+            android:id="@+id/tagHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="High"
+            android:textSize="10sp"
+            android:textColor="#FF6B35"
+            android:background="@color/bg_icon_red_dark"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@id/taskDate"
+            app:layout_constraintTop_toBottomOf="@id/taskTitle" />
+
+        <TextView
+            android:id="@+id/tagWork"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Work"
+            android:textSize="10sp"
+            android:textColor="@color/brand_blue"
+            android:background="@color/bg_icon_blue_dark"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="4dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="4dp"
+            app:layout_constraintStart_toEndOf="@id/tagHigh"
+            app:layout_constraintTop_toBottomOf="@id/taskTitle" />
+
+        <ImageView
+            android:id="@+id/menuIcon"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@android:drawable/ic_menu_more"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>
