@@ -1,20 +1,24 @@
 package com.example.taskmanagementapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
+
 import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
+
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -23,6 +27,7 @@ public class CreateTaskActivity extends AppCompatActivity {
     private EditText etTaskTitle, etDescription;
     private TextView tvDueDate, titleText;
     private Spinner spinnerPriority, spinnerCategory;
+    private SwitchCompat switchTaskReminder;
     private TaskDao taskDao;
     private Task existingTask;
     private boolean isEditMode = false;
@@ -41,6 +46,12 @@ public class CreateTaskActivity extends AppCompatActivity {
         titleText = findViewById(R.id.titleText);
         spinnerPriority = findViewById(R.id.spinnerPriority);
         spinnerCategory = findViewById(R.id.spinnerCategory);
+        switchTaskReminder = findViewById(R.id.switchTaskReminder);
+
+        // Default reminder state from global settings for new tasks
+        SharedPreferences prefs = getSharedPreferences("AppSettings", MODE_PRIVATE);
+        boolean globalReminder = prefs.getBoolean("isReminderEnabled", true);
+        switchTaskReminder.setChecked(globalReminder);
 
         // Set up Spinners
         String[] priorities = {"Low", "Medium", "High"};
@@ -81,6 +92,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         etTaskTitle.setText(existingTask.getTitle());
         etDescription.setText(existingTask.getDescription());
         tvDueDate.setText(existingTask.getDueDate());
+        switchTaskReminder.setChecked(existingTask.isReminderEnabled());
         
         // Set spinner selections
         ArrayAdapter priorityAdapter = (ArrayAdapter) spinnerPriority.getAdapter();
@@ -112,6 +124,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         String dueDate = tvDueDate.getText().toString();
         String priority = spinnerPriority.getSelectedItem().toString();
         String category = spinnerCategory.getSelectedItem().toString();
+        boolean reminderEnabled = switchTaskReminder.isChecked();
 
         if (title.isEmpty()) {
             Toast.makeText(this, "Please enter a title", Toast.LENGTH_SHORT).show();
@@ -124,10 +137,11 @@ public class CreateTaskActivity extends AppCompatActivity {
             existingTask.setDueDate(dueDate);
             existingTask.setPriority(priority);
             existingTask.setCategory(category);
+            existingTask.setReminderEnabled(reminderEnabled);
             taskDao.updateTask(existingTask);
             showCustomToast("Task updated");
         } else {
-            Task newTask = new Task(0, title, description, dueDate, priority, category, false);
+            Task newTask = new Task(0, title, description, dueDate, priority, category, false, reminderEnabled);
             taskDao.addTask(newTask);
             showCustomToast("Task created");
         }

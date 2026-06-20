@@ -1,5 +1,7 @@
 package com.example.taskmanagementapp.adapter;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -26,6 +28,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
     private List<Task> tasks;
     private OnTaskClickListener listener;
+    private boolean globalReminderEnabled = true;
 
     public interface OnTaskClickListener {
         void onTaskClick(Task task);
@@ -33,6 +36,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         void onTaskDelete(Task task);
         void onTaskDuplicate(Task task);
         void onTaskStatusChanged(Task task);
+        void onTaskReminderToggled(Task task);
     }
 
     public TaskAdapter(List<Task> tasks, OnTaskClickListener listener) {
@@ -40,17 +44,27 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
         this.listener = listener;
     }
 
+    public void setGlobalReminderEnabled(boolean enabled) {
+        this.globalReminderEnabled = enabled;
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public TaskViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_task, parent, false);
+        
+        // Initial check for global reminder setting
+        SharedPreferences prefs = parent.getContext().getSharedPreferences("AppSettings", Context.MODE_PRIVATE);
+        globalReminderEnabled = prefs.getBoolean("isReminderEnabled", true);
+
         return new TaskViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TaskViewHolder holder, int position) {
         Task task = tasks.get(position);
-        holder.bind(task, listener);
+        holder.bind(task, listener, globalReminderEnabled);
     }
 
     @Override
@@ -66,7 +80,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
     static class TaskViewHolder extends RecyclerView.ViewHolder {
         CheckBox checkBox;
         TextView tvTitle, tvDate, tagPriority, tagCategory;
-        ImageView menuIcon, ivCalendarIcon;
+        ImageView menuIcon, ivCalendarIcon, ivReminderIcon;
 
         public TaskViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,13 +91,40 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             tagCategory = itemView.findViewById(R.id.tagWork);
             menuIcon = itemView.findViewById(R.id.menuIcon);
             ivCalendarIcon = itemView.findViewById(R.id.ivCalendarIcon);
+            ivReminderIcon = itemView.findViewById(R.id.ivReminderIcon);
         }
 
-        public void bind(Task task, OnTaskClickListener listener) {
+        public void bind(Task task, OnTaskClickListener listener, boolean globalReminderEnabled) {
             tvTitle.setText(task.getTitle());
             tvDate.setText(task.getDueDate());
             tagPriority.setText(task.getPriority());
             tagCategory.setText(task.getCategory());
+            
+            if (globalReminderEnabled) {
+                ivReminderIcon.setVisibility(View.VISIBLE);
+                if (task.isReminderEnabled()) {
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.brand_blue)));
+                    ivReminderIcon.setAlpha(1.0f);
+                } else {
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    ivReminderIcon.setAlpha(0.4f);
+                }
+            } else {
+                ivReminderIcon.setVisibility(View.GONE);
+            }
+
+            ivReminderIcon.setOnClickListener(v -> {
+                task.setReminderEnabled(!task.isReminderEnabled());
+                listener.onTaskReminderToggled(task);
+                // Update UI immediately
+                if (task.isReminderEnabled()) {
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.brand_blue)));
+                    ivReminderIcon.setAlpha(1.0f);
+                } else {
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    ivReminderIcon.setAlpha(0.4f);
+                }
+            });
             
             checkBox.setOnCheckedChangeListener(null);
             checkBox.setChecked(task.isCompleted());

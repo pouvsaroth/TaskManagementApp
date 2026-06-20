@@ -6,11 +6,12 @@
         <item name="colorPrimary">@color/nav_selected</item>
         <item name="colorAccent">@color/nav_selected</item>
         <item name="colorControlActivated">@color/nav_selected</item>
+        <item name="android:colorBackground">@color/app_main_background</item>
+        <item name="colorSurface">@color/card_background_color</item>
     </style>
-    <style name="Theme.TaskManagementApp" parent="Theme.MaterialComponents.DayNight.NoActionBar">
-        <item name="android:windowBackground">#121212</item>
-        <item name="colorSurface">#1E1E1E</item>
-        <item name="editTextColor">#FFFFFF</item>
-        <item name="colorSecondary">#2D2D2D</item>
+
+    <style name="Theme.TaskManagementApp" parent="Base.Theme.TaskManagementApp">
+        <!-- Add any theme-specific overrides here -->
+        <item name="editTextColor">@color/text_primary</item>
     </style>
 </resources>

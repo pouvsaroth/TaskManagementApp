@@ -116,7 +116,7 @@
                             android:layout_marginStart="14dp"
                             android:layout_marginTop="2dp"
                             android:layout_toEndOf="@id/iconTotal"
-                            android:text="5"
+                            android:text="0"
                             android:textColor="?attr/editTextColor"
                             android:textSize="28sp"
                             android:textStyle="bold" />
@@ -160,7 +160,7 @@
                             android:layout_marginStart="14dp"
                             android:layout_marginTop="2dp"
                             android:layout_toEndOf="@id/iconCompleted"
-                            android:text="1"
+                            android:text="0"
                             android:textColor="?attr/editTextColor"
                             android:textSize="28sp"
                             android:textStyle="bold" />
@@ -211,7 +211,7 @@
                             android:layout_marginStart="14dp"
                             android:layout_marginTop="2dp"
                             android:layout_toEndOf="@id/iconPending"
-                            android:text="4"
+                            android:text="0"
                             android:textColor="?attr/editTextColor"
                             android:textSize="28sp"
                             android:textStyle="bold" />
@@ -255,7 +255,7 @@
                             android:layout_marginStart="14dp"
                             android:layout_marginTop="2dp"
                             android:layout_toEndOf="@id/iconOverdue"
-                            android:text="1"
+                            android:text="0"
                             android:textColor="?attr/editTextColor"
                             android:textSize="28sp"
                             android:textStyle="bold" />
@@ -294,7 +294,7 @@
                             android:layout_centerInParent="true"
                             android:indeterminate="false"
                             android:max="100"
-                            android:progress="20"
+                            android:progress="0"
                             android:progressDrawable="@drawable/circular_progress_bar" />
                         <LinearLayout
                             android:layout_width="wrap_content"
@@ -303,9 +303,10 @@
                             android:gravity="center"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txtProgressPercent"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="20%"
+                                android:text="0%"
                                 android:textColor="?attr/editTextColor"
                                 android:textSize="36sp"
                                 android:textStyle="bold" />
@@ -330,9 +331,10 @@
                             android:gravity="center"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txtDoneCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="1"
+                                android:text="0"
                                 android:textColor="#28A745"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
@@ -351,9 +353,10 @@
                             android:gravity="center"
                             android:orientation="vertical">
                             <TextView
+                                android:id="@+id/txtToDoCount"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="4"
+                                android:text="0"
                                 android:textColor="#FD7E14"
                                 android:textSize="24sp"
                                 android:textStyle="bold" />
@@ -403,21 +406,23 @@
                             android:textColor="@color/text_muted"
                             android:textSize="15sp" />
                         <TextView
+                            android:id="@+id/txtHighCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="2"
+                            android:text="0"
                             android:textColor="?attr/editTextColor"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                         <ProgressBar
+                            android:id="@+id/progressHigh"
                             style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="6dp"
                             android:layout_below="@id/lblHigh"
                             android:layout_marginTop="8dp"
-                            android:max="5"
-                            android:progress="2"
+                            android:max="100"
+                            android:progress="0"
                             android:progressBackgroundTint="@color/progress_track_color"
                             android:progressTint="#DC3545" />
                     </RelativeLayout>
@@ -434,21 +439,23 @@
                             android:textColor="@color/text_muted"
                             android:textSize="15sp" />
                         <TextView
+                            android:id="@+id/txtMediumCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="1"
+                            android:text="0"
                             android:textColor="?attr/editTextColor"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                         <ProgressBar
+                            android:id="@+id/progressMedium"
                             style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="6dp"
                             android:layout_below="@id/lblMedium"
                             android:layout_marginTop="8dp"
-                            android:max="5"
-                            android:progress="1"
+                            android:max="100"
+                            android:progress="0"
                             android:progressBackgroundTint="@color/progress_track_color"
                             android:progressTint="#FFC107" />
                     </RelativeLayout>
@@ -465,21 +472,23 @@
                             android:textColor="@color/text_muted"
                             android:textSize="15sp" />
                         <TextView
+                            android:id="@+id/txtLowCount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_alignParentEnd="true"
-                            android:text="1"
+                            android:text="0"
                             android:textColor="?attr/editTextColor"
                             android:textSize="16sp"
                             android:textStyle="bold" />
                         <ProgressBar
+                            android:id="@+id/progressLow"
                             style="@android:style/Widget.ProgressBar.Horizontal"
                             android:layout_width="match_parent"
                             android:layout_height="6dp"
                             android:layout_below="@id/lblLow"
                             android:layout_marginTop="8dp"
-                            android:max="5"
-                            android:progress="1"
+                            android:max="100"
+                            android:progress="0"
                             android:progressBackgroundTint="@color/progress_track_color"
                             android:progressTint="#6C757D" />
                     </RelativeLayout>
@@ -520,79 +529,22 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/txtNoTasksToday"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="14dp">
-                        <View
-                            android:id="@+id/dot1"
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_centerVertical="true"
-                            android:background="@android:color/holo_red_light" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:layout_toEndOf="@id/dot1"
-                            android:layout_toStartOf="@+id/time1"
-                            android:text="Review project proposal"
-                            android:textColor="?attr/editTextColor"
-                            android:textSize="15sp" />
-                        <TextView
-                            android:id="@+id/time1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="Today, 2:00 PM"
-                            android:textColor="@color/text_muted"
-                            android:textSize="13sp" />
-                    </RelativeLayout>
+                        android:layout_marginTop="16dp"
+                        android:text="No tasks for today"
+                        android:textColor="@color/text_muted"
+                        android:visibility="gone" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/progress_track_color" />
-
-                    <RelativeLayout
+                    <LinearLayout
+                        android:id="@+id/containerTodayTasks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="14dp">
-                        <View
-                            android:id="@+id/dot2"
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_centerVertical="true"
-                            android:background="@android:color/holo_orange_light" />
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:layout_toEndOf="@id/dot2"
-                            android:layout_toStartOf="@+id/time2"
-                            android:text="Update design system"
-                            android:textColor="?attr/editTextColor"
-                            android:textSize="15sp" />
-                        <TextView
-                            android:id="@+id/time2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="Today, 4:30 PM"
-                            android:textColor="@color/text_muted"
-                            android:textSize="13sp" />
-                    </RelativeLayout>
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp" />
+
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
@@ -631,43 +583,21 @@
                             android:textStyle="bold" />
                     </LinearLayout>
 
-                    <RelativeLayout
+                    <TextView
+                        android:id="@+id/txtNoUpcomingTasks"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="18dp"
-                        android:background="?attr/selectableItemBackground"
-                        android:clickable="true"
-                        android:focusable="true"
-                        android:padding="14dp">
+                        android:layout_marginTop="16dp"
+                        android:text="No upcoming tasks"
+                        android:textColor="@color/text_muted"
+                        android:visibility="gone" />
 
-                        <View
-                            android:id="@+id/dotUpcoming1"
-                            android:layout_width="8dp"
-                            android:layout_height="8dp"
-                            android:layout_centerVertical="true"
-                            android:background="#6C757D" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginStart="12dp"
-                            android:layout_toEndOf="@id/dotUpcoming1"
-                            android:layout_toStartOf="@+id/timeUpcoming1"
-                            android:text="Grocery shopping"
-                            android:textColor="?attr/editTextColor"
-                            android:textSize="15sp" />
-
-                        <TextView
-                            android:id="@+id/timeUpcoming1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:text="Tomorrow, 10:00 AM"
-                            android:textColor="@color/text_muted"
-                            android:textSize="13sp" />
-                    </RelativeLayout>
+                    <LinearLayout
+                        android:id="@+id/containerUpcomingTasks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_marginTop="8dp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

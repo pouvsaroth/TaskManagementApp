@@ -20,7 +20,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Settings"
+                android:text="@string/settings_title"
                 android:textColor="?attr/editTextColor"
                 android:textSize="32sp"
                 android:layout_marginTop="20dp"
@@ -30,7 +30,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="APPEARANCE"
+                android:text="@string/appearance_header"
                 android:textColor="@color/text_muted"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -46,11 +46,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Dark Mode"
+                    android:text="@string/dark_mode"
                     android:textColor="?attr/editTextColor"
                     android:textSize="20sp" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchDarkMode"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="NOTIFICATIONS"
+                android:text="@string/notifications_header"
                 android:textColor="@color/text_muted"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -78,11 +78,11 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Enable Reminders"
+                    android:text="@string/enable_reminders"
                     android:textColor="?attr/editTextColor"
                     android:textSize="20sp" />
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/switchReminder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -102,15 +102,18 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Notification Time"
+                    android:text="@string/notification_time"
                     android:textColor="?attr/editTextColor"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:layout_marginEnd="8dp"
+                    android:labelFor="@+id/timeDropdown" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/timeDropdownLayout"
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                    android:layout_width="140dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:minWidth="120dp"
                     android:hint="">
 
                     <AutoCompleteTextView
@@ -120,8 +123,10 @@
                         android:inputType="none"
                         android:textSize="16sp"
                         android:gravity="center"
+                        android:paddingStart="16dp"
+                        android:paddingEnd="16dp"
                         android:textColor="?attr/editTextColor"
-                        android:contentDescription="Notification Time Selection Dropdown" />
+                        android:contentDescription="@string/notification_time_desc" />
 
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -130,7 +135,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
-                android:text="ABOUT"
+                android:text="@string/about_header"
                 android:textColor="@color/text_muted"
                 android:textSize="14sp"
                 android:textStyle="bold" />
@@ -145,16 +150,14 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="App Version"
+                    android:text="@string/app_version"
                     android:textColor="?attr/editTextColor"
                     android:textSize="15sp" />
-
-
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1.0.0"
+                    android:text="@string/app_version_value"
                     android:textColor="@color/text_muted"
                     android:textSize="18sp" />
             </LinearLayout>
@@ -168,15 +171,16 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="left"
-                    android:text="© 2026 Task Manager"
+                    android:gravity="start"
+                    android:text="@string/copyright"
                     android:textColor="@color/text_muted"
                     android:textSize="13sp" />
 
                 <RelativeLayout
                     android:id="@+id/btnPrivacyPolicy"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
                     android:clickable="true"
                     android:focusable="true">
 
@@ -185,13 +189,15 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/privacyIcon"
+                        android:layout_marginEnd="8dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/privacyPolicyLink"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Privacy Policy"
+                            android:text="@string/privacy_policy"
                             android:textColor="#0073aa"
                             android:textSize="18sp" />
 
@@ -204,18 +210,21 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/privacyIcon"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_open_in_new"
-                        app:tint="#0073aa" />
+                        app:tint="#0073aa"
+                        android:contentDescription="@string/open_link_desc" />
                 </RelativeLayout>
 
                 <RelativeLayout
                     android:id="@+id/btnTermsOfService"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="wrap_content"
+                    android:minHeight="50dp"
                     android:layout_marginTop="10dp"
                     android:clickable="true"
                     android:focusable="true">
@@ -225,13 +234,15 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentStart="true"
                         android:layout_centerVertical="true"
+                        android:layout_toStartOf="@+id/termsIcon"
+                        android:layout_marginEnd="8dp"
                         android:orientation="vertical">
 
                         <TextView
                             android:id="@+id/termsOfServiceLink"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Terms of Service"
+                            android:text="@string/terms_of_service"
                             android:textColor="#0073aa"
                             android:textSize="18sp" />
 
@@ -244,12 +255,14 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:id="@+id/termsIcon"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_open_in_new"
-                        app:tint="#0073aa" />
+                        app:tint="#0073aa"
+                        android:contentDescription="@string/open_link_desc" />
                 </RelativeLayout>
 
             </LinearLayout>

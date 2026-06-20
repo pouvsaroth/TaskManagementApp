@@ -14,10 +14,15 @@ public class Task implements Serializable {
     private String priority;
     private String category;
     private boolean isCompleted;
+    private boolean reminderEnabled;
 
     public Task() {}
 
     public Task(int id, String title, String description, String dueDate, String priority, String category, boolean isCompleted) {
+        this(id, title, description, dueDate, priority, category, isCompleted, false);
+    }
+
+    public Task(int id, String title, String description, String dueDate, String priority, String category, boolean isCompleted, boolean reminderEnabled) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -25,6 +30,7 @@ public class Task implements Serializable {
         this.priority = priority;
         this.category = category;
         this.isCompleted = isCompleted;
+        this.reminderEnabled = reminderEnabled;
     }
 
     // Getters and Setters
@@ -48,4 +54,7 @@ public class Task implements Serializable {
 
     public boolean isCompleted() { return isCompleted; }
     public void setCompleted(boolean completed) { isCompleted = completed; }
+
+    public boolean isReminderEnabled() { return reminderEnabled; }
+    public void setReminderEnabled(boolean reminderEnabled) { this.reminderEnabled = reminderEnabled; }
 }

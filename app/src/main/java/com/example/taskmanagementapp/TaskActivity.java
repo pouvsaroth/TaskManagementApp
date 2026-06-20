@@ -2,6 +2,7 @@ package com.example.taskmanagementapp;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -54,10 +55,6 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-        // Force full white background for status bar with dark icons
-        getWindow().setStatusBarColor(Color.WHITE);
-        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-
         setContentView(R.layout.activity_task);
 
         taskDao = AppDatabase.getInstance(this).taskDao();
@@ -170,9 +167,14 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
             settingsIcon.setOnClickListener(v -> {
                 Intent intent = new Intent(TaskActivity.this, SettingsActivity.class);
                 startActivity(intent);
-                finish();
             });
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadTasks();
     }
     
     private void updateFilter(String filter) {
@@ -241,10 +243,16 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         } else {
             emptyStateLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
+            
+            SharedPreferences prefs = getSharedPreferences("AppSettings", Context.MODE_PRIVATE);
+            boolean globalReminderEnabled = prefs.getBoolean("isReminderEnabled", true);
+
             if (adapter == null) {
                 adapter = new TaskAdapter(filteredTasks, this);
+                adapter.setGlobalReminderEnabled(globalReminderEnabled);
                 recyclerView.setAdapter(adapter);
             } else {
+                adapter.setGlobalReminderEnabled(globalReminderEnabled);
                 adapter.setTasks(filteredTasks);
             }
         }
@@ -309,7 +317,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     public void onTaskDuplicate(Task task) {
         Task duplicatedTask = new Task(0, task.getTitle() + " (Copy)", 
                 task.getDescription(), task.getDueDate(), 
-                task.getPriority(), task.getCategory(), false);
+                task.getPriority(), task.getCategory(), false, task.isReminderEnabled());
         taskDao.addTask(duplicatedTask);
         loadTasks();
         showCustomToast("Task duplicated");
@@ -320,6 +328,16 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         taskDao.updateTask(task);
         if (task.isCompleted()) {
             showCustomToast("Task completed!");
+        }
+    }
+
+    @Override
+    public void onTaskReminderToggled(Task task) {
+        taskDao.updateTask(task);
+        if (task.isReminderEnabled()) {
+            showCustomToast("Reminder turned on");
+        } else {
+            showCustomToast("Reminder turned off");
         }
     }
 

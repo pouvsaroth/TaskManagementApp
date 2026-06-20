@@ -9,13 +9,14 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -24,8 +25,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private AutoCompleteTextView timeDropdown;
     private TextInputLayout timeDropdownContainer;
-    private Switch switchReminder;
-    private Switch switchDarkMode;
+    private SwitchCompat switchReminder;
+    private SwitchCompat switchDarkMode;
 
     // SharedPreferences សម្រាប់រក្សាទុកទិន្នន័យ
     private SharedPreferences sharedPreferences;
@@ -177,10 +178,9 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             btnPrivacyPolicy.setOnClickListener(v -> {
-                String url = "https://7033246.figma.site/privacy";
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
+                Toast.makeText(SettingsActivity.this, "Privacy Policy Coming soon!", Toast.LENGTH_SHORT).show();
             });
+
         }
 
         // 9. TERMS OF SERVICE HOVER & TOUCH MANAGEMENT
@@ -218,9 +218,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             btnTermsOfService.setOnClickListener(v -> {
-                String url = "https://7033246.figma.site/terms";
-                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                startActivity(intent);
+                Toast.makeText(SettingsActivity.this, "Terms of Service Coming soon!", Toast.LENGTH_SHORT).show();
             });
         }
     }
