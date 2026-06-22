@@ -15,6 +15,8 @@ public class Task implements Serializable {
     private String category;
     private boolean isCompleted;
     private boolean reminderEnabled;
+    private String createdAt;
+    private String modifiedAt;
 
     public Task() {}
 
@@ -57,4 +59,10 @@ public class Task implements Serializable {
 
     public boolean isReminderEnabled() { return reminderEnabled; }
     public void setReminderEnabled(boolean reminderEnabled) { this.reminderEnabled = reminderEnabled; }
+
+    public String getCreatedAt() { return createdAt; }
+    public void setCreatedAt(String createdAt) { this.createdAt = createdAt; }
+
+    public String getModifiedAt() { return modifiedAt; }
+    public void setModifiedAt(String modifiedAt) { this.modifiedAt = modifiedAt; }
 }

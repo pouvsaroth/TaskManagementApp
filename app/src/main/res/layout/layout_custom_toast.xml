@@ -13,7 +13,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="28dp"
         android:layout_height="28dp"
-        app:cardCornerRadius="14dp"
+        app:cardCornerRadius="5dp"
         app:cardElevation="0dp"
         app:cardBackgroundColor="@android:color/transparent">
         <ImageView
@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
         android:text="Task updated successfully"
-        android:textColor="@color/white"
+        android:textColor="@color/text_primary"
         android:textSize="14sp"
         android:textStyle="bold" />
 

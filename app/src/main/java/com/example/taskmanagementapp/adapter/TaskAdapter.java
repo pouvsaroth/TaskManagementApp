@@ -103,7 +103,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             if (globalReminderEnabled) {
                 ivReminderIcon.setVisibility(View.VISIBLE);
                 if (task.isReminderEnabled()) {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.brand_blue)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.icon_green)));
                     ivReminderIcon.setAlpha(1.0f);
                 } else {
                     ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
@@ -118,7 +118,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 listener.onTaskReminderToggled(task);
                 // Update UI immediately
                 if (task.isReminderEnabled()) {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.brand_blue)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.icon_green)));
                     ivReminderIcon.setAlpha(1.0f);
                 } else {
                     ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
