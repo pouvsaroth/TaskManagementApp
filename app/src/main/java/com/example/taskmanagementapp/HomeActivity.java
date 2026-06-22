@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -35,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
     private TextView txtHighCount, txtMediumCount, txtLowCount;
     private LinearLayout containerTodayTasks, containerUpcomingTasks;
     private TextView txtNoTasksToday, txtNoUpcomingTasks;
+    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +45,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         taskDao = AppDatabase.getInstance(this).taskDao();
+        drawerLayout = findViewById(R.id.drawerLayout);
 
         // Initialize UI components
         txtTotalCount = findViewById(R.id.txtTotalCount);
@@ -92,13 +96,136 @@ public class HomeActivity extends AppCompatActivity {
 
         // 3. Menu button
         findViewById(R.id.btnMenu).setOnClickListener(v ->
-                Toast.makeText(HomeActivity.this, "Menu Clicked!", Toast.LENGTH_SHORT).show());
+                drawerLayout.openDrawer(GravityCompat.START));
+
+        setupSidebar();
+        highlightSidebarItem(R.id.menuHome);
+    }
+
+    private void setupSidebar() {
+        findViewById(R.id.btnCloseSidebar).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
+        
+        findViewById(R.id.menuHome).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
+        
+        findViewById(R.id.menuAllTasks).setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, TaskActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
+        findViewById(R.id.menuCompleted).setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+            intent.putExtra("filter", "Completed");
+            startActivity(intent);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
+        findViewById(R.id.menuPending).setOnClickListener(v -> {
+            Intent intent = new Intent(HomeActivity.this, TaskActivity.class);
+            intent.putExtra("filter", "Pending");
+            startActivity(intent);
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
+        findViewById(R.id.menuSettings).setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, SettingsActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+
+        findViewById(R.id.btnAddCategory).setOnClickListener(v -> {
+            startActivity(new Intent(HomeActivity.this, CategoryActivity.class));
+            drawerLayout.closeDrawer(GravityCompat.START);
+        });
+    }
+
+    private void highlightSidebarItem(int menuId) {
+        int selectedColor = ContextCompat.getColor(this, R.color.nav_selected);
+        int unselectedColor = ContextCompat.getColor(this, R.color.text_primary);
+        int unselectedIconColor = ContextCompat.getColor(this, R.color.nav_unselected);
+
+        // Reset all
+        resetSidebarItem(R.id.menuHome, R.id.imgHome, R.id.txtHome, R.id.dotHome, unselectedIconColor, unselectedColor);
+        resetSidebarItem(R.id.menuAllTasks, R.id.imgAllTasks, R.id.txtAllTasks, 0, unselectedIconColor, unselectedColor);
+        resetSidebarItem(R.id.menuCompleted, R.id.imgCompleted, R.id.txtCompleted, 0, unselectedIconColor, unselectedColor);
+        resetSidebarItem(R.id.menuPending, R.id.imgPending, R.id.txtPending, 0, unselectedIconColor, unselectedColor);
+
+        // Highlight selected
+        if (menuId == R.id.menuHome) {
+            setSidebarItemHighlighted(R.id.menuHome, R.id.imgHome, R.id.txtHome, R.id.dotHome, selectedColor);
+        } else if (menuId == R.id.menuAllTasks) {
+            setSidebarItemHighlighted(R.id.menuAllTasks, R.id.imgAllTasks, R.id.txtAllTasks, 0, selectedColor);
+        } else if (menuId == R.id.menuCompleted) {
+            setSidebarItemHighlighted(R.id.menuCompleted, R.id.imgCompleted, R.id.txtCompleted, 0, selectedColor);
+        } else if (menuId == R.id.menuPending) {
+            setSidebarItemHighlighted(R.id.menuPending, R.id.imgPending, R.id.txtPending, 0, selectedColor);
+        }
+    }
+
+    private void resetSidebarItem(int layoutId, int imgId, int txtId, int dotId, int iconColor, int textColor) {
+        View layout = findViewById(layoutId);
+        ImageView img = findViewById(imgId);
+        TextView txt = findViewById(txtId);
+        if (layout != null) layout.setBackground(null);
+        if (img != null) img.setColorFilter(iconColor);
+        if (txt != null) txt.setTextColor(textColor);
+        if (dotId != 0) {
+            View dot = findViewById(dotId);
+            if (dot != null) dot.setVisibility(View.GONE);
+        }
+    }
+
+    private void setSidebarItemHighlighted(int layoutId, int imgId, int txtId, int dotId, int color) {
+        View layout = findViewById(layoutId);
+        ImageView img = findViewById(imgId);
+        TextView txt = findViewById(txtId);
+        if (layout != null) layout.setBackgroundResource(R.drawable.bg_sidebar_selected);
+        if (img != null) img.setColorFilter(color);
+        if (txt != null) txt.setTextColor(color);
+        if (dotId != 0) {
+            View dot = findViewById(dotId);
+            if (dot != null) dot.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         updateDashboard();
+        updateSidebarCategories();
+    }
+
+    private void updateSidebarCategories() {
+        LinearLayout container = findViewById(R.id.containerSidebarCategories);
+        if (container == null) return;
+        container.removeAllViews();
+
+        List<com.example.taskmanagementapp.model.Category> categories = AppDatabase.getInstance(this).categoryDao().getAllCategories();
+        List<Task> allTasks = taskDao.getAllTasks();
+
+        for (com.example.taskmanagementapp.model.Category category : categories) {
+            View itemView = LayoutInflater.from(this).inflate(R.layout.item_sidebar_category, container, false);
+            View dot = itemView.findViewById(R.id.catDot);
+            TextView name = itemView.findViewById(R.id.catName);
+            TextView count = itemView.findViewById(R.id.catCount);
+
+            name.setText(category.getName());
+
+            // Set color
+            try {
+                android.graphics.drawable.GradientDrawable bg = (android.graphics.drawable.GradientDrawable) dot.getBackground();
+                bg.setColor(android.graphics.Color.parseColor(category.getColor()));
+            } catch (Exception ignored) {}
+
+            // Count tasks
+            int taskCount = 0;
+            for (Task task : allTasks) {
+                if (category.getName().equalsIgnoreCase(task.getCategory())) {
+                    taskCount++;
+                }
+            }
+            count.setText(taskCount + (taskCount == 1 ? " task" : " tasks"));
+
+            container.addView(itemView);
+        }
     }
 
     private void updateDashboard() {

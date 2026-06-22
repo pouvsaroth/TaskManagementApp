@@ -25,4 +25,47 @@
     <color name="progress_remaining_color">#F0F2F5</color>
     <color name="progress_track_color">#F0F2F5</color>
     <color name="app_main_background">#FFFFFF</color>
+
+    <color name="priority_high_bg">#EF4444</color>
+    <color name="priority_medium_bg">#F59E0B</color>
+    <color name="priority_low_bg">#10B981</color>
+
+    <color name="category_personal_bg">#E1F5FE</color>
+    <color name="category_personal_text">#0288D1</color>
+
+    <color name="status_pending">#0097A7</color>
+    <color name="status_completed">#4CAF50</color>
+
+    <color name="btn_save_bg">#007FA3</color>
+    <color name="btn_cancel_stroke">#E0E0E0</color>
+    <color name="header_text_color">#666666</color>
+
+    <!-- Category Management Colors -->
+    <color name="cat_red">#EF4444</color>
+    <color name="cat_orange">#F59E0B</color>
+    <color name="cat_green">#10B981</color>
+    <color name="cat_blue">#0EA5E9</color>
+    <color name="cat_purple">#8B5CF6</color>
+    <color name="cat_pink">#EC4899</color>
+
+    <!-- Dark Mode Colors -->
+    <color name="dark_bg">#111827</color>
+    <color name="dark_input_bg">#1F2937</color>
+    <color name="dark_input_border">#374151</color>
+    <color name="dark_text_primary">#FFFFFF</color>
+    <color name="dark_text_secondary">#9CA3AF</color>
+    <color name="dark_teal">#0891B2</color>
+    <color name="dark_btn_cancel">#1F2937</color>
+
+    <!-- UI Component Colors -->
+    <color name="bg_edit_text_fill">#FFFFFF</color>
+    <color name="bg_edit_text_stroke">#F0F2F5</color>
+    <!-- Category Figma Colors -->
+    <color name="figma_red">#EF4444</color>
+    <color name="figma_orange">#F59E0B</color>
+    <color name="figma_green">#10B981</color>
+    <color name="figma_teal">#0EA5E9</color>
+    <color name="figma_purple">#8B5CF6</color>
+    <color name="figma_pink">#EC4899</color>
+    <color name="figma_selection_border">#007FA3</color>
 </resources>
