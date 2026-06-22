@@ -9,7 +9,7 @@
     <color name="nav_background">#FFFFFF</color>
     <color name="nav_icon_unselected">#666666</color>
     <color name="brand_blue">#0288D1</color>
-    <color name="text_muted">#888888</color>
+    <color name="text_muted">#666666</color>
     <color name="text_primary">#000000</color>
     <color name="divider_color">#F0F2F5</color>
     <color name="filter_unselected_bg">#F3F4F6</color>

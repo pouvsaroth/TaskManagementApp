@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskmanagementapp.R;
 import com.example.taskmanagementapp.model.Task;
@@ -103,10 +104,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             if (globalReminderEnabled) {
                 ivReminderIcon.setVisibility(View.VISIBLE);
                 if (task.isReminderEnabled()) {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.icon_green)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.icon_green)));
                     ivReminderIcon.setAlpha(1.0f);
                 } else {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
                     ivReminderIcon.setAlpha(0.4f);
                 }
             } else {
@@ -118,10 +119,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 listener.onTaskReminderToggled(task);
                 // Update UI immediately
                 if (task.isReminderEnabled()) {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.icon_green)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.icon_green)));
                     ivReminderIcon.setAlpha(1.0f);
                 } else {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
                     ivReminderIcon.setAlpha(0.4f);
                 }
             });
@@ -213,12 +214,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     tvDate.setTextColor(Color.parseColor("#EF4444"));
                     ivCalendarIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#EF4444")));
                 } else {
-                    tvDate.setTextColor(itemView.getContext().getResources().getColor(R.color.text_muted));
-                    ivCalendarIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    tvDate.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_muted));
+                    ivCalendarIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
                 }
             } catch (Exception e) {
-                tvDate.setTextColor(itemView.getContext().getResources().getColor(R.color.text_muted));
-                ivCalendarIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                tvDate.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_muted));
+                ivCalendarIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
             }
         }
     }
