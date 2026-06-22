@@ -141,14 +141,14 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             checkOverdue(task);
 
             if ("High".equals(task.getPriority())) {
-                tagPriority.setTextColor(Color.parseColor("#FF6B35"));
-                tagPriority.setBackgroundResource(R.color.bg_icon_red_dark);
+                tagPriority.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.icon_red));
+                tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_red_dark)));
             } else if ("Medium".equals(task.getPriority())) {
-                tagPriority.setTextColor(Color.parseColor("#F59E0B"));
-                tagPriority.setBackgroundResource(R.color.bg_icon_orange_dark);
+                tagPriority.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.icon_orange));
+                tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_orange_dark)));
             } else {
-                tagPriority.setTextColor(Color.parseColor("#6B7280"));
-                tagPriority.setBackgroundResource(R.color.bg_icon_blue_dark);
+                tagPriority.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_muted));
+                tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_blue_dark)));
             }
 
             itemView.setOnClickListener(v -> listener.onTaskClick(task));
