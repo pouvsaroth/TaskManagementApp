@@ -19,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskmanagementapp.adapter.TaskAdapter;
@@ -183,13 +184,13 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         
         // Update UI
         filterAll.setBackgroundResource(filter.equals("All") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
-        filterAll.setTextColor(filter.equals("All") ? Color.WHITE : getResources().getColor(R.color.nav_unselected));
+        filterAll.setTextColor(filter.equals("All") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
         
         filterToday.setBackgroundResource(filter.equals("Today") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
-        filterToday.setTextColor(filter.equals("Today") ? Color.WHITE : getResources().getColor(R.color.nav_unselected));
+        filterToday.setTextColor(filter.equals("Today") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
         
         filterOverdue.setBackgroundResource(filter.equals("Overdue") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
-        filterOverdue.setTextColor(filter.equals("Overdue") ? Color.WHITE : getResources().getColor(R.color.nav_unselected));
+        filterOverdue.setTextColor(filter.equals("Overdue") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
         
         loadTasks();
     }

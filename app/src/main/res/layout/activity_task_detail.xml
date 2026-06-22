@@ -316,7 +316,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Completed"
-                        android:textColor="#28A745"
+                        android:textColor="@color/status_completed_text"
                         android:textStyle="bold"
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="4dp"

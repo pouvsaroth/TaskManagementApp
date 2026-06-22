@@ -67,7 +67,7 @@
             android:layout_height="wrap_content"
             android:text="High"
             android:textSize="10sp"
-            android:textColor="#FF6B35"
+            android:textColor="@color/icon_red"
             android:background="@color/bg_icon_red_dark"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
