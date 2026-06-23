@@ -142,8 +142,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             existingTask.setPriority(priority);
             existingTask.setCategory(category);
             existingTask.setReminderEnabled(reminderEnabled);
+
             existingTask.setModifiedAt(now);
-            
+
             taskDao.updateTask(existingTask);
             ToastUtils.showCustomToast(this, "Task updated");
         } else {

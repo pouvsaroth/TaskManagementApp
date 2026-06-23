@@ -37,7 +37,6 @@
                 android:text="Back"
                 android:textColor="@color/nav_selected"
                 android:textSize="16sp"
-                android:textStyle="bold"
                 android:layout_marginStart="4dp"
                 app:layout_constraintStart_toEndOf="@id/btnBack"
                 app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +48,6 @@
                 android:layout_height="wrap_content"
                 android:text="New Task"
                 android:textSize="18sp"
-                android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -230,28 +228,27 @@
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
+        <TextView
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_edit_text"
+            android:gravity="center"
             android:text="Cancel"
-            android:textAllCaps="false"
             android:textColor="@color/text_muted"
-            app:backgroundTint="@color/nav_background"
-            app:strokeColor="@color/divider_color"
-            app:strokeWidth="1dp"
             android:layout_marginEnd="8dp" />
 
-        <Button
+        <TextView
             android:id="@+id/btnSave"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_weight="1"
+            android:background="@drawable/bg_filter_selected"
+            android:gravity="center"
             android:text="Save Task"
-            android:textAllCaps="false"
             android:textColor="@color/white"
-            app:backgroundTint="@color/nav_selected" />
+            android:textStyle="bold" />
 
     </LinearLayout>
 
