@@ -100,6 +100,41 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             tvDate.setText(task.getDueDate());
             tagPriority.setText(task.getPriority());
             tagCategory.setText(task.getCategory());
+
+            // Priority colors
+            int priorityBg;
+            int priorityText;
+            if ("High".equals(task.getPriority())) {
+                priorityBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_red_soft);
+                priorityText = ContextCompat.getColor(itemView.getContext(), R.color.icon_red);
+            } else if ("Medium".equals(task.getPriority())) {
+                priorityBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_orange_soft);
+                priorityText = ContextCompat.getColor(itemView.getContext(), R.color.icon_orange);
+            } else {
+                priorityBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_blue_soft);
+                priorityText = ContextCompat.getColor(itemView.getContext(), R.color.icon_blue);
+            }
+            tagPriority.setBackgroundTintList(ColorStateList.valueOf(priorityBg));
+            tagPriority.setTextColor(priorityText);
+
+            // Category colors
+            int catBg;
+            int catText;
+            if ("Work".equals(task.getCategory())) {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_blue_soft);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.icon_blue);
+            } else if ("Personal".equals(task.getCategory())) {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_green_soft);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.icon_green);
+            } else if ("Study".equals(task.getCategory())) {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_yellow_soft);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.icon_yellow);
+            } else {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.filter_unselected_bg);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.text_muted);
+            }
+            tagCategory.setBackgroundTintList(ColorStateList.valueOf(catBg));
+            tagCategory.setTextColor(catText);
             
             if (globalReminderEnabled) {
                 ivReminderIcon.setVisibility(View.VISIBLE);
@@ -132,24 +167,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
             if (task.isCompleted()) {
                 tvTitle.setPaintFlags(tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                itemView.setAlpha(0.5f);
+                itemView.setAlpha(0.6f);
             } else {
                 tvTitle.setPaintFlags(tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 itemView.setAlpha(1.0f);
             }
 
             checkOverdue(task);
-
-            if ("High".equals(task.getPriority())) {
-                tagPriority.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.icon_red));
-                tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_red_dark)));
-            } else if ("Medium".equals(task.getPriority())) {
-                tagPriority.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.icon_orange));
-                tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_orange_dark)));
-            } else {
-                tagPriority.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_muted));
-                tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_blue_dark)));
-            }
 
             itemView.setOnClickListener(v -> listener.onTaskClick(task));
             
@@ -188,7 +212,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 task.setCompleted(isChecked);
                 if (isChecked) {
                     tvTitle.setPaintFlags(tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    itemView.setAlpha(0.5f);
+                    itemView.setAlpha(0.6f);
                 } else {
                     tvTitle.setPaintFlags(tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     itemView.setAlpha(1.0f);

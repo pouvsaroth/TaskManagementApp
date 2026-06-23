@@ -12,6 +12,7 @@
     <color name="text_muted">#666666</color>
     <color name="text_primary">#000000</color>
     <color name="divider_color">#F0F2F5</color>
+    <color name="badge_border">#D1D5DB</color>
     <color name="filter_unselected_bg">#F3F4F6</color>
 
     <color name="card_background_color">#F8F9FA</color>

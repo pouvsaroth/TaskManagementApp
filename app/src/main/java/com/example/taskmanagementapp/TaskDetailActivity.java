@@ -40,6 +40,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     private View tagCategoryContainer;
     private ImageView ivCategoryIcon;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +69,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             
             updateTaskStatusVisuals(isChecked);
             taskDao.updateTask(task);
-            if (isChecked) ToastUtils.showCustomToast(this, "Task completed!");
+            if (isChecked) ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
         });
     }
 
@@ -92,37 +93,39 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         tvTaskTitle.setText(task.getTitle());
         tvDescription.setText(task.getDescription() != null && !task.getDescription().isEmpty() 
-                ? task.getDescription() : "No description provided.");
+                ? task.getDescription() : getString(R.string.no_description));
         tvDueDate.setText(task.getDueDate());
         
         // Priority Badge
         tagPriority.setText("! " + task.getPriority());
+        int priorityBg;
         if ("High".equals(task.getPriority())) {
-            tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.icon_red)));
+            priorityBg = ContextCompat.getColor(this, R.color.bg_icon_red_soft);
         } else if ("Medium".equals(task.getPriority())) {
-            tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.icon_orange)));
+            priorityBg = ContextCompat.getColor(this, R.color.bg_icon_orange_soft);
         } else {
-            tagPriority.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.text_muted)));
+            priorityBg = ContextCompat.getColor(this, R.color.bg_icon_blue_soft);
         }
+        tagPriority.setBackgroundTintList(ColorStateList.valueOf(priorityBg));
+        tagPriority.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
 
         tagCategory.setText(task.getCategory());
-        int catColor, catBg;
+        int catBg;
         if ("Work".equals(task.getCategory())) {
             catBg = ContextCompat.getColor(this, R.color.bg_icon_blue_soft);
-            catColor = ContextCompat.getColor(this, R.color.icon_blue);
         } else if ("Personal".equals(task.getCategory())) {
             catBg = ContextCompat.getColor(this, R.color.bg_icon_green_soft);
-            catColor = ContextCompat.getColor(this, R.color.icon_green);
         } else if ("Study".equals(task.getCategory())) {
             catBg = ContextCompat.getColor(this, R.color.bg_icon_yellow_soft);
-            catColor = ContextCompat.getColor(this, R.color.icon_yellow);
         } else {
             catBg = ContextCompat.getColor(this, R.color.filter_unselected_bg);
-            catColor = ContextCompat.getColor(this, R.color.text_muted);
         }
         tagCategoryContainer.setBackgroundTintList(ColorStateList.valueOf(catBg));
-        tagCategory.setTextColor(catColor);
-        ivCategoryIcon.setImageTintList(ColorStateList.valueOf(catColor));
+        
+        // Text and Icon are always primary color (black in light mode)
+        int textColor = ContextCompat.getColor(this, R.color.text_primary);
+        tagCategory.setTextColor(textColor);
+        ivCategoryIcon.setImageTintList(ColorStateList.valueOf(textColor));
         
         cbComplete.setOnCheckedChangeListener(null);
         cbComplete.setChecked(task.isCompleted());
@@ -136,7 +139,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         switchTaskReminder.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.setReminderEnabled(isChecked);
             taskDao.updateTask(task);
-            ToastUtils.showCustomToast(this, isChecked ? "Reminder enabled" : "Reminder disabled");
+            ToastUtils.showCustomToast(this, isChecked ? getString(R.string.toast_reminder_enabled) : getString(R.string.toast_reminder_disabled));
         });
         
         cbComplete.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -149,7 +152,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             updateTaskStatusVisuals(isChecked);
             taskDao.updateTask(task);
-            if (isChecked) ToastUtils.showCustomToast(this, "Task completed!");
+            if (isChecked) ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
         });
     }
 
@@ -157,14 +160,14 @@ public class TaskDetailActivity extends AppCompatActivity {
         if (isCompleted) {
             tvTaskTitle.setPaintFlags(tvTaskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             tvTaskTitle.setTextColor(ContextCompat.getColor(this, R.color.text_muted));
-            tvStatus.setText("Completed");
-            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_completed_text));
+            tvStatus.setText(R.string.status_completed);
+            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
             tvStatus.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_completed_bg)));
         } else {
             tvTaskTitle.setPaintFlags(tvTaskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             tvTaskTitle.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
-            tvStatus.setText("Pending");
-            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_pending_text));
+            tvStatus.setText(R.string.status_pending);
+            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
             tvStatus.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_pending_bg)));
         }
     }
@@ -175,7 +178,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         
         TextView tvMenuComplete = popupView.findViewById(R.id.tvMenuComplete);
-        tvMenuComplete.setText(task.isCompleted() ? "Mark as Pending" : "Mark as Complete");
+        tvMenuComplete.setText(task.isCompleted() ? getString(R.string.menu_mark_pending) : getString(R.string.menu_mark_complete));
 
         popupView.findViewById(R.id.menuEdit).setOnClickListener(v -> {
             Intent intent = new Intent(this, CreateTaskActivity.class);
@@ -191,7 +194,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             copy.setCreatedAt(now);
             copy.setModifiedAt(now);
             taskDao.addTask(copy);
-            ToastUtils.showCustomToast(this, "Task duplicated");
+            ToastUtils.showCustomToast(this, getString(R.string.toast_task_duplicated));
             popupWindow.dismiss();
         });
 
@@ -209,7 +212,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         });
 
         popupView.findViewById(R.id.menuFavorite).setOnClickListener(v -> {
-            ToastUtils.showCustomToast(this, "Added to favorites");
+            ToastUtils.showCustomToast(this, getString(R.string.toast_added_favorites));
             popupWindow.dismiss();
         });
 
@@ -231,7 +234,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         dialogView.findViewById(R.id.btnCancel).setOnClickListener(v -> dialog.dismiss());
         dialogView.findViewById(R.id.btnDelete).setOnClickListener(v -> {
             taskDao.deleteTask(task);
-            ToastUtils.showCustomToast(this, "Task deleted");
+            ToastUtils.showCustomToast(this, getString(R.string.toast_task_deleted));
             dialog.dismiss();
             finish();
         });

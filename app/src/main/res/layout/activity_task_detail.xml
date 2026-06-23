@@ -33,7 +33,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task Details"
+                android:text="@string/task_details_title"
                 android:textSize="18sp"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
@@ -100,7 +100,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Review project proposal"
+                    tools:text="Review project proposal"
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:textColor="@color/text_primary" />
@@ -118,14 +118,13 @@
                     android:id="@+id/tagPriority"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="! High"
+                    tools:text="! High"
                     android:textSize="12sp"
                     android:textStyle="bold"
-                    android:textColor="@color/white"
+                    android:textColor="@color/text_primary"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="4dp"
                     android:background="@drawable/bg_badge"
-                    android:backgroundTint="#EF4444"
                     android:layout_marginEnd="8dp" />
 
                 <LinearLayout
@@ -136,25 +135,24 @@
                     android:gravity="center_vertical"
                     android:paddingHorizontal="10dp"
                     android:paddingVertical="4dp"
-                    android:background="@drawable/bg_badge"
-                    android:backgroundTint="@color/bg_icon_blue_soft">
+                    android:background="@drawable/bg_badge">
 
                     <ImageView
                         android:id="@+id/ivCategoryIcon"
                         android:layout_width="14dp"
                         android:layout_height="14dp"
                         android:src="@drawable/ic_tasks"
-                        app:tint="@color/icon_blue"
-                        android:layout_marginEnd="4dp" />
+                        android:layout_marginEnd="4dp"
+                        app:tint="@color/text_primary" />
 
                     <TextView
                         android:id="@+id/tagCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Work"
+                        tools:text="Work"
                         android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/icon_blue" />
+                        android:textColor="@color/text_primary"
+                        android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -173,7 +171,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DESCRIPTION"
+                    android:text="@string/label_description"
                     android:textStyle="bold"
                     android:textColor="@color/text_muted"
                     android:textSize="12sp"
@@ -183,7 +181,7 @@
                     android:id="@+id/tvDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Review the Q2 project proposal and provide feedback on timeline and budget allocation."
+                    tools:text="Review the Q2 project proposal and provide feedback on timeline and budget allocation."
                     android:textColor="@color/text_primary"
                     android:textSize="16sp"
                     android:lineSpacingExtra="4dp" />
@@ -204,7 +202,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DUE DATE"
+                    android:text="@string/label_due_date"
                     android:textStyle="bold"
                     android:textColor="@color/text_muted"
                     android:textSize="12sp"
@@ -235,7 +233,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="16dp"
-                        android:text="Today, 2:00 PM"
+                        tools:text="Today, 2:00 PM"
                         android:textColor="@color/text_primary"
                         android:textSize="16sp"
                         android:textStyle="bold" />
@@ -266,7 +264,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Remind me"
+                    android:text="@string/label_remind_me"
                     android:textColor="@color/text_primary"
                     android:textStyle="bold"
                     android:textSize="16sp" />
@@ -292,7 +290,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DETAILS"
+                    android:text="@string/label_details"
                     android:textStyle="bold"
                     android:textColor="@color/text_muted"
                     android:textSize="12sp"
@@ -308,20 +306,19 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Status"
+                        android:text="@string/label_status"
                         android:textColor="@color/text_muted" />
 
                     <TextView
                         android:id="@+id/tvStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Completed"
-                        android:textColor="@color/status_completed_text"
+                        tools:text="Completed"
+                        android:textColor="@color/text_primary"
                         android:textStyle="bold"
                         android:paddingHorizontal="8dp"
                         android:paddingVertical="4dp"
-                        android:background="@drawable/bg_badge"
-                        android:backgroundTint="@color/bg_icon_green_soft"/>
+                        android:background="@drawable/bg_badge" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -334,14 +331,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Created"
+                        android:text="@string/label_created"
                         android:textColor="@color/text_muted" />
 
                     <TextView
                         android:id="@+id/tvCreated"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="May 28, 2026"
+                        tools:text="May 28, 2026"
                         android:textColor="@color/text_primary" />
                 </LinearLayout>
 
@@ -354,14 +351,14 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="Modified"
+                        android:text="@string/label_modified"
                         android:textColor="@color/text_muted" />
 
                     <TextView
                         android:id="@+id/tvModified"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="May 30, 2026"
+                        tools:text="May 30, 2026"
                         android:textColor="@color/text_primary" />
                 </LinearLayout>
 

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="200dp"
     android:layout_height="wrap_content"
     app:cardCornerRadius="12dp"
     app:cardElevation="8dp"
-    app:cardBackgroundColor="@color/white"
+    app:cardBackgroundColor="@color/nav_background"
     app:cardUseCompatPadding="true">
 
     <LinearLayout
@@ -28,14 +29,14 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:src="@drawable/ic_pencil"
-                app:tint="#007FA3" />
+                app:tint="@color/icon_blue" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Edit Task"
-                android:textColor="@color/black"
+                android:text="@string/menu_edit"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -53,14 +54,14 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:src="@drawable/ic_copy"
-                app:tint="#007FA3" />
+                app:tint="@color/icon_blue" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Duplicate Task"
-                android:textColor="@color/black"
+                android:text="@string/menu_duplicate"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -78,15 +79,15 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:src="@drawable/ic_check_circle_outline"
-                app:tint="#28A745" />
+                app:tint="@color/icon_green" />
 
             <TextView
                 android:id="@+id/tvMenuComplete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Mark as Complete"
-                android:textColor="@color/black"
+                tools:text="Mark as Complete"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -104,14 +105,14 @@
                 android:layout_width="18dp"
                 android:layout_height="18dp"
                 android:src="@drawable/ic_star"
-                app:tint="#FFC107" />
+                app:tint="@color/icon_yellow" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Add to Favorites"
-                android:textColor="@color/black"
+                android:text="@string/menu_add_favorite"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp" />
         </LinearLayout>
 
@@ -119,7 +120,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:layout_marginVertical="4dp"
-            android:background="#F0F2F5" />
+            android:background="@color/divider_color" />
 
         <LinearLayout
             android:id="@+id/menuDelete"
@@ -141,7 +142,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Delete Task"
+                android:text="@string/menu_delete_task"
                 android:textColor="@color/text_red"
                 android:textSize="14sp" />
         </LinearLayout>

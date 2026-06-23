@@ -30,7 +30,8 @@
     <color name="progress_track_color">#2D323E</color>
     <color name="app_main_background">#121212</color>
     <color name="text_primary">#FFFFFF</color>
-    <color name="text_muted">#8E8E93</color>
+    <color name="text_muted">#A1A1AA</color>
     <color name="divider_color">#2D323E</color>
+    <color name="badge_border">#3F3F46</color>
     <color name="filter_unselected_bg">#2D323E</color>
 </resources>
