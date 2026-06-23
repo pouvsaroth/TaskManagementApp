@@ -8,10 +8,30 @@
     <color name="bg_icon_green_dark">#142923</color>
     <color name="bg_icon_orange_dark">#2A241F</color>
     <color name="bg_icon_red_dark">#291B22</color>
+
+    <color name="bg_icon_blue_soft">#162535</color>
+    <color name="bg_icon_green_soft">#142923</color>
+    <color name="bg_icon_orange_soft">#2A241F</color>
+    <color name="bg_icon_red_soft">#291B22</color>
+    <color name="bg_icon_yellow_soft">#2A2A1A</color>
+
+    <color name="icon_blue">#4FC3F7</color>
+    <color name="icon_green">#81C784</color>
+    <color name="icon_orange">#FFB74D</color>
+    <color name="icon_yellow">#FFF176</color>
+    <color name="icon_red">#E57373</color>
+
+    <color name="status_completed_bg">#142923</color>
+    <color name="status_completed_text">#81C784</color>
+    <color name="status_pending_bg">#2A241F</color>
+    <color name="status_pending_text">#FFB74D</color>
+
     <color name="progress_remaining_color">#2D323E</color>
     <color name="progress_track_color">#2D323E</color>
     <color name="app_main_background">#121212</color>
     <color name="text_primary">#FFFFFF</color>
+    <color name="text_muted">#A1A1AA</color>
     <color name="divider_color">#2D323E</color>
+    <color name="badge_border">#3F3F46</color>
     <color name="filter_unselected_bg">#2D323E</color>
 </resources>

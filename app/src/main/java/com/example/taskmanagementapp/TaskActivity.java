@@ -16,10 +16,10 @@ import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskmanagementapp.adapter.TaskAdapter;
@@ -28,6 +28,7 @@ import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.example.taskmanagementapp.util.ToastUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -174,21 +175,22 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     @Override
     protected void onResume() {
         super.onResume();
+        // Refresh the list whenever user returns to this activity
         loadTasks();
     }
-    
+
     private void updateFilter(String filter) {
         currentFilter = filter;
         
         // Update UI
         filterAll.setBackgroundResource(filter.equals("All") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
-        filterAll.setTextColor(filter.equals("All") ? Color.WHITE : getResources().getColor(R.color.nav_unselected));
+        filterAll.setTextColor(filter.equals("All") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
         
         filterToday.setBackgroundResource(filter.equals("Today") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
-        filterToday.setTextColor(filter.equals("Today") ? Color.WHITE : getResources().getColor(R.color.nav_unselected));
+        filterToday.setTextColor(filter.equals("Today") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
         
         filterOverdue.setBackgroundResource(filter.equals("Overdue") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
-        filterOverdue.setTextColor(filter.equals("Overdue") ? Color.WHITE : getResources().getColor(R.color.nav_unselected));
+        filterOverdue.setTextColor(filter.equals("Overdue") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
         
         loadTasks();
     }
@@ -306,7 +308,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         dialogView.findViewById(R.id.btnDelete).setOnClickListener(v -> {
             taskDao.deleteTask(task);
             loadTasks();
-            showCustomToast("Task deleted");
+            ToastUtils.showCustomToast(this, "Task deleted");
             dialog.dismiss();
         });
 
@@ -318,16 +320,24 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         Task duplicatedTask = new Task(0, task.getTitle() + " (Copy)", 
                 task.getDescription(), task.getDueDate(), 
                 task.getPriority(), task.getCategory(), false, task.isReminderEnabled());
+        
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        String now = sdf.format(new Date());
+        duplicatedTask.setCreatedAt(now);
+        duplicatedTask.setModifiedAt(now);
+
         taskDao.addTask(duplicatedTask);
         loadTasks();
-        showCustomToast("Task duplicated");
+        ToastUtils.showCustomToast(this, "Task duplicated");
     }
 
     @Override
     public void onTaskStatusChanged(Task task) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        task.setModifiedAt(sdf.format(new Date()));
         taskDao.updateTask(task);
         if (task.isCompleted()) {
-            showCustomToast("Task completed!");
+            ToastUtils.showCustomToast(this, "Task completed!");
         }
     }
 
@@ -335,20 +345,9 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     public void onTaskReminderToggled(Task task) {
         taskDao.updateTask(task);
         if (task.isReminderEnabled()) {
-            showCustomToast("Reminder turned on");
+            ToastUtils.showCustomToast(this, "Reminder turned on");
         } else {
-            showCustomToast("Reminder turned off");
+            ToastUtils.showCustomToast(this, "Reminder turned off");
         }
-    }
-
-    private void showCustomToast(String message) {
-        View layout = LayoutInflater.from(this).inflate(R.layout.layout_custom_toast, null);
-        TextView text = layout.findViewById(R.id.toastMessage);
-        text.setText(message);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
     }
 }

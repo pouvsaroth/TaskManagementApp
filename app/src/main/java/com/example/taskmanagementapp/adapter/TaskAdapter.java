@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskmanagementapp.R;
 import com.example.taskmanagementapp.model.Task;
@@ -99,14 +100,49 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             tvDate.setText(task.getDueDate());
             tagPriority.setText(task.getPriority());
             tagCategory.setText(task.getCategory());
+
+            // Priority colors
+            int priorityBg;
+            int priorityText;
+            if ("High".equals(task.getPriority())) {
+                priorityBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_red_soft);
+                priorityText = ContextCompat.getColor(itemView.getContext(), R.color.icon_red);
+            } else if ("Medium".equals(task.getPriority())) {
+                priorityBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_orange_soft);
+                priorityText = ContextCompat.getColor(itemView.getContext(), R.color.icon_orange);
+            } else {
+                priorityBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_blue_soft);
+                priorityText = ContextCompat.getColor(itemView.getContext(), R.color.icon_blue);
+            }
+            tagPriority.setBackgroundTintList(ColorStateList.valueOf(priorityBg));
+            tagPriority.setTextColor(priorityText);
+
+            // Category colors
+            int catBg;
+            int catText;
+            if ("Work".equals(task.getCategory())) {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_blue_soft);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.icon_blue);
+            } else if ("Personal".equals(task.getCategory())) {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_green_soft);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.icon_green);
+            } else if ("Study".equals(task.getCategory())) {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.bg_icon_yellow_soft);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.icon_yellow);
+            } else {
+                catBg = ContextCompat.getColor(itemView.getContext(), R.color.filter_unselected_bg);
+                catText = ContextCompat.getColor(itemView.getContext(), R.color.text_muted);
+            }
+            tagCategory.setBackgroundTintList(ColorStateList.valueOf(catBg));
+            tagCategory.setTextColor(catText);
             
             if (globalReminderEnabled) {
                 ivReminderIcon.setVisibility(View.VISIBLE);
                 if (task.isReminderEnabled()) {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.brand_blue)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.icon_green)));
                     ivReminderIcon.setAlpha(1.0f);
                 } else {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
                     ivReminderIcon.setAlpha(0.4f);
                 }
             } else {
@@ -118,10 +154,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 listener.onTaskReminderToggled(task);
                 // Update UI immediately
                 if (task.isReminderEnabled()) {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.brand_blue)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.icon_green)));
                     ivReminderIcon.setAlpha(1.0f);
                 } else {
-                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    ivReminderIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
                     ivReminderIcon.setAlpha(0.4f);
                 }
             });
@@ -131,24 +167,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
             if (task.isCompleted()) {
                 tvTitle.setPaintFlags(tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                itemView.setAlpha(0.5f);
+                itemView.setAlpha(0.6f);
             } else {
                 tvTitle.setPaintFlags(tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                 itemView.setAlpha(1.0f);
             }
 
             checkOverdue(task);
-
-            if ("High".equals(task.getPriority())) {
-                tagPriority.setTextColor(Color.parseColor("#FF6B35"));
-                tagPriority.setBackgroundResource(R.color.bg_icon_red_dark);
-            } else if ("Medium".equals(task.getPriority())) {
-                tagPriority.setTextColor(Color.parseColor("#F59E0B"));
-                tagPriority.setBackgroundResource(R.color.bg_icon_orange_dark);
-            } else {
-                tagPriority.setTextColor(Color.parseColor("#6B7280"));
-                tagPriority.setBackgroundResource(R.color.bg_icon_blue_dark);
-            }
 
             itemView.setOnClickListener(v -> listener.onTaskClick(task));
             
@@ -187,7 +212,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 task.setCompleted(isChecked);
                 if (isChecked) {
                     tvTitle.setPaintFlags(tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-                    itemView.setAlpha(0.5f);
+                    itemView.setAlpha(0.6f);
                 } else {
                     tvTitle.setPaintFlags(tvTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                     itemView.setAlpha(1.0f);
@@ -213,12 +238,12 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                     tvDate.setTextColor(Color.parseColor("#EF4444"));
                     ivCalendarIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#EF4444")));
                 } else {
-                    tvDate.setTextColor(itemView.getContext().getResources().getColor(R.color.text_muted));
-                    ivCalendarIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                    tvDate.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_muted));
+                    ivCalendarIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
                 }
             } catch (Exception e) {
-                tvDate.setTextColor(itemView.getContext().getResources().getColor(R.color.text_muted));
-                ivCalendarIcon.setImageTintList(ColorStateList.valueOf(itemView.getContext().getResources().getColor(R.color.text_muted)));
+                tvDate.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_muted));
+                ivCalendarIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));
             }
         }
     }

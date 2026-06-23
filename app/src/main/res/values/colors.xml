@@ -9,19 +9,43 @@
     <color name="nav_background">#FFFFFF</color>
     <color name="nav_icon_unselected">#666666</color>
     <color name="brand_blue">#0288D1</color>
-    <color name="text_muted">#888888</color>
+    <color name="text_muted">#666666</color>
     <color name="text_primary">#000000</color>
     <color name="divider_color">#F0F2F5</color>
+    <color name="badge_border">#D1D5DB</color>
     <color name="filter_unselected_bg">#F3F4F6</color>
 
     <color name="card_background_color">#F8F9FA</color>
 
+    <!-- Professional Icon Colors -->
+    <color name="bg_icon_blue_soft">#E1F5FE</color>
+    <color name="icon_blue">#0288D1</color>
+
+    <color name="bg_icon_green_soft">#E8F5E9</color>
+    <color name="icon_green">#2E7D32</color>
+
+    <color name="bg_icon_orange_soft">#FFF3E0</color>
+    <color name="icon_orange">#EF6C00</color>
+
+    <color name="bg_icon_yellow_soft">#FFFDE7</color>
+    <color name="icon_yellow">#FBC02D</color>
+
+    <color name="bg_icon_red_soft">#FFEBEE</color>
+    <color name="icon_red">#C62828</color>
+
+    <!-- Old references maintained for compatibility -->
     <color name="bg_icon_blue_dark">#E8F4F8</color>
     <color name="bg_icon_green_dark">#EAF7EE</color>
     <color name="bg_icon_orange_dark">#FEF6EC</color>
     <color name="bg_icon_red_dark">#FCEBEB</color>
     <color name="bg_red_soft">#FFF1F1</color>
     <color name="text_red">#EF4444</color>
+
+    <color name="status_completed_bg">#EAF7EE</color>
+    <color name="status_completed_text">#28A745</color>
+    <color name="status_pending_bg">#FFF8E1</color>
+    <color name="status_pending_text">#F59E0B</color>
+
     <color name="progress_remaining_color">#F0F2F5</color>
     <color name="progress_track_color">#F0F2F5</color>
     <color name="app_main_background">#FFFFFF</color>
