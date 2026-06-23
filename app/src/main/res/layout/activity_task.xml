@@ -118,6 +118,24 @@
                 android:layout_height="32dp"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 app:layout_constraintBottom_toBottomOf="parent"
+            <ImageView
+                android:id="@+id/searchIcon"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:src="@android:drawable/ic_menu_search"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                app:layout_constraintEnd_toStartOf="@id/settingsIcon"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginEnd="16dp"
+                app:tint="@color/text_primary" />
+
+            <ImageView
+                android:id="@+id/settingsIcon"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_settings"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:tint="@color/text_primary" />
@@ -199,6 +217,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/filterContainer">
+            app:layout_constraintTop_toTopOf="parent"
+            app:tint="@color/text_red" />
 
             <ImageView
                 android:layout_width="100dp"
@@ -216,6 +236,57 @@
                 android:textColor="@color/text_primary"
                 android:textSize="22sp"
                 android:textStyle="bold" />
+    <!-- Filter Buttons -->
+    <LinearLayout
+        android:id="@+id/filterContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <TextView
+            android:id="@+id/filterAll"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:text="All"
+            android:textSize="14sp"
+            android:textColor="@color/white"
+            android:background="@drawable/bg_filter_selected"
+            android:gravity="center"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/filterToday"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:text="Today"
+            android:textSize="14sp"
+            android:textColor="@color/nav_unselected"
+            android:background="@drawable/bg_filter_unselected"
+            android:gravity="center"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <TextView
+            android:id="@+id/filterOverdue"
+            android:layout_width="0dp"
+            android:layout_height="36dp"
+            android:layout_weight="1"
+            android:text="Overdue"
+            android:textSize="14sp"
+            android:textColor="@color/nav_unselected"
+            android:background="@drawable/bg_filter_unselected"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true" />
 
             <TextView
                 android:layout_width="wrap_content"

@@ -11,6 +11,7 @@ import android.widget.GridView;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import com.example.taskmanagementapp.R;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.text.SimpleDateFormat;
@@ -174,7 +175,7 @@ public class DatePickerBottomSheet extends BottomSheetDialogFragment {
 
             // Style for different months
             if (c.get(Calendar.MONTH) != currentMonth) {
-                tvDay.setTextColor(context.getResources().getColor(R.color.text_muted));
+                tvDay.setTextColor(ContextCompat.getColor(context, R.color.text_muted));
                 tvDay.setAlpha(0.5f);
             } else {
                 tvDay.setTextColor(Color.BLACK);

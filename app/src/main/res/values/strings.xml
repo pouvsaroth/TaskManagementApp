@@ -36,5 +36,34 @@
     <string name="open_link_desc">Open link in browser</string>
     <string name="set_reminder">Set Reminder</string>
 
+    <!-- Task Detail Screen -->
+    <string name="task_details_title">Task Details</string>
+    <string name="label_description">DESCRIPTION</string>
+    <string name="label_due_date">DUE DATE</string>
+    <string name="label_remind_me">Remind me</string>
+    <string name="label_details">DETAILS</string>
+    <string name="label_status">Status</string>
+    <string name="label_created">Created</string>
+    <string name="label_modified">Modified</string>
+    <string name="no_description">No description provided.</string>
+    <string name="status_completed">Completed</string>
+    <string name="status_pending">Pending</string>
+
+    <!-- Menu Items -->
+    <string name="menu_edit">Edit Task</string>
+    <string name="menu_duplicate">Duplicate Task</string>
+    <string name="menu_mark_complete">Mark as Complete</string>
+    <string name="menu_mark_pending">Mark as Pending</string>
+    <string name="menu_add_favorite">Add to Favorites</string>
+    <string name="menu_delete_task">Delete Task</string>
+
+    <!-- Toasts -->
+    <string name="toast_task_duplicated">Task duplicated</string>
+    <string name="toast_added_favorites">Added to favorites</string>
+    <string name="toast_task_deleted">Task deleted</string>
+    <string name="toast_task_completed">Task completed!</string>
+    <string name="toast_reminder_enabled">Reminder enabled</string>
+    <string name="toast_reminder_disabled">Reminder disabled</string>
 
 </resources>
+

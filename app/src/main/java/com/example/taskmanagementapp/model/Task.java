@@ -18,6 +18,7 @@ public class Task implements Serializable {
     private long createdAt;
     private long modifiedAt;
 
+
     public Task() {}
 
     public Task(int id, String title, String description, String dueDate, String priority, String category, boolean isCompleted) {
@@ -67,4 +68,5 @@ public class Task implements Serializable {
 
     public long getModifiedAt() { return modifiedAt; }
     public void setModifiedAt(long modifiedAt) { this.modifiedAt = modifiedAt; }
+
 }

@@ -18,6 +18,7 @@ import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
 
+import com.example.taskmanagementapp.util.ToastUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -131,6 +132,9 @@ public class CreateTaskActivity extends AppCompatActivity {
             return;
         }
 
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
+        String now = sdf.format(new Date());
+
         if (isEditMode) {
             existingTask.setTitle(title);
             existingTask.setDescription(description);
@@ -138,27 +142,21 @@ public class CreateTaskActivity extends AppCompatActivity {
             existingTask.setPriority(priority);
             existingTask.setCategory(category);
             existingTask.setReminderEnabled(reminderEnabled);
-            existingTask.setModifiedAt(System.currentTimeMillis());
+
+            existingTask.setModifiedAt(now);
+
             taskDao.updateTask(existingTask);
-            showCustomToast("Task updated");
+            ToastUtils.showCustomToast(this, "Task updated");
         } else {
             Task newTask = new Task(0, title, description, dueDate, priority, category, false, reminderEnabled);
+            newTask.setCreatedAt(now);
+            newTask.setModifiedAt(now);
+
             taskDao.addTask(newTask);
-            showCustomToast("Task created");
+            ToastUtils.showCustomToast(this, "Task created");
         }
 
         setResult(RESULT_OK);
         finish();
-    }
-
-    private void showCustomToast(String message) {
-        View layout = LayoutInflater.from(this).inflate(R.layout.layout_custom_toast, null);
-        TextView text = layout.findViewById(R.id.toastMessage);
-        text.setText(message);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(layout);
-        toast.show();
     }
 }
