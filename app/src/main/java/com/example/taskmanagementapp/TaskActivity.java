@@ -15,15 +15,11 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import androidx.core.view.GravityCompat;
-import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskmanagementapp.adapter.TaskAdapter;
@@ -46,30 +42,28 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     private TaskAdapter adapter;
     private TaskDao taskDao;
     private static final int REQUEST_CODE_CREATE_TASK = 101;
-    
+
     private TextView filterAll, filterToday, filterOverdue;
     private String currentFilter = "All";
 
     private View searchLayout;
     private EditText etSearch;
     private String searchQuery = "";
-    
+
     private View emptyStateLayout;
-    private DrawerLayout drawerLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.activity_task);
 
         taskDao = AppDatabase.getInstance(this).taskDao();
-        drawerLayout = findViewById(R.id.drawerLayout);
 
         // Setup RecyclerView
         recyclerView = findViewById(R.id.taskRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        
+
         emptyStateLayout = findViewById(R.id.emptyStateLayout);
         findViewById(R.id.btnCreateTaskEmpty).setOnClickListener(v -> {
             Intent intent = new Intent(TaskActivity.this, CreateTaskActivity.class);
@@ -80,7 +74,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         filterAll = findViewById(R.id.filterAll);
         filterToday = findViewById(R.id.filterToday);
         filterOverdue = findViewById(R.id.filterOverdue);
-        
+
         filterAll.setOnClickListener(v -> updateFilter("All"));
         filterToday.setOnClickListener(v -> updateFilter("Today"));
         filterOverdue.setOnClickListener(v -> updateFilter("Overdue"));
@@ -164,7 +158,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         ImageView btnMenu = findViewById(R.id.btnMenu);
         if (btnMenu != null) {
             btnMenu.setOnClickListener(v ->
-                    drawerLayout.openDrawer(GravityCompat.START)
+                    Toast.makeText(TaskActivity.this, "Menu Clicked!", Toast.LENGTH_SHORT).show()
             );
         }
 
@@ -176,106 +170,6 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 startActivity(intent);
             });
         }
-
-        setupSidebar();
-        
-        // Handle filter from Intent if any
-        if (getIntent().hasExtra("filter")) {
-            String filter = getIntent().getStringExtra("filter");
-            if ("Completed".equals(filter)) {
-                highlightSidebarItem(R.id.menuCompleted);
-            } else if ("Pending".equals(filter)) {
-                highlightSidebarItem(R.id.menuPending);
-            }
-        } else {
-            highlightSidebarItem(R.id.menuAllTasks);
-        }
-    }
-
-    private void setupSidebar() {
-        findViewById(R.id.btnCloseSidebar).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
-
-        findViewById(R.id.menuHome).setOnClickListener(v -> {
-            startActivity(new Intent(TaskActivity.this, HomeActivity.class));
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
-
-        findViewById(R.id.menuAllTasks).setOnClickListener(v -> {
-            updateFilter("All");
-            highlightSidebarItem(R.id.menuAllTasks);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
-
-        findViewById(R.id.menuCompleted).setOnClickListener(v -> {
-            // Filter by completed (Custom logic could be added here)
-            highlightSidebarItem(R.id.menuCompleted);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
-
-        findViewById(R.id.menuPending).setOnClickListener(v -> {
-            // Filter by pending
-            highlightSidebarItem(R.id.menuPending);
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
-
-        findViewById(R.id.menuSettings).setOnClickListener(v -> {
-            startActivity(new Intent(TaskActivity.this, SettingsActivity.class));
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
-
-        findViewById(R.id.btnAddCategory).setOnClickListener(v -> {
-            startActivity(new Intent(TaskActivity.this, CategoryActivity.class));
-            drawerLayout.closeDrawer(GravityCompat.START);
-        });
-    }
-
-    private void highlightSidebarItem(int menuId) {
-        int selectedColor = ContextCompat.getColor(this, R.color.nav_selected);
-        int unselectedColor = ContextCompat.getColor(this, R.color.text_primary);
-        int unselectedIconColor = ContextCompat.getColor(this, R.color.nav_unselected);
-
-        // Reset all
-        resetSidebarItem(R.id.menuHome, R.id.imgHome, R.id.txtHome, R.id.dotHome, unselectedIconColor, unselectedColor);
-        resetSidebarItem(R.id.menuAllTasks, R.id.imgAllTasks, R.id.txtAllTasks, 0, unselectedIconColor, unselectedColor);
-        resetSidebarItem(R.id.menuCompleted, R.id.imgCompleted, R.id.txtCompleted, 0, unselectedIconColor, unselectedColor);
-        resetSidebarItem(R.id.menuPending, R.id.imgPending, R.id.txtPending, 0, unselectedIconColor, unselectedColor);
-
-        // Highlight selected
-        if (menuId == R.id.menuHome) {
-            setSidebarItemHighlighted(R.id.menuHome, R.id.imgHome, R.id.txtHome, R.id.dotHome, selectedColor);
-        } else if (menuId == R.id.menuAllTasks) {
-            setSidebarItemHighlighted(R.id.menuAllTasks, R.id.imgAllTasks, R.id.txtAllTasks, 0, selectedColor);
-        } else if (menuId == R.id.menuCompleted) {
-            setSidebarItemHighlighted(R.id.menuCompleted, R.id.imgCompleted, R.id.txtCompleted, 0, selectedColor);
-        } else if (menuId == R.id.menuPending) {
-            setSidebarItemHighlighted(R.id.menuPending, R.id.imgPending, R.id.txtPending, 0, selectedColor);
-        }
-    }
-
-    private void resetSidebarItem(int layoutId, int imgId, int txtId, int dotId, int iconColor, int textColor) {
-        View layout = findViewById(layoutId);
-        ImageView img = findViewById(imgId);
-        TextView txt = findViewById(txtId);
-        if (layout != null) layout.setBackground(null);
-        if (img != null) img.setColorFilter(iconColor);
-        if (txt != null) txt.setTextColor(textColor);
-        if (dotId != 0) {
-            View dot = findViewById(dotId);
-            if (dot != null) dot.setVisibility(View.GONE);
-        }
-    }
-
-    private void setSidebarItemHighlighted(int layoutId, int imgId, int txtId, int dotId, int color) {
-        View layout = findViewById(layoutId);
-        ImageView img = findViewById(imgId);
-        TextView txt = findViewById(txtId);
-        if (layout != null) layout.setBackgroundResource(R.drawable.bg_sidebar_selected);
-        if (img != null) img.setColorFilter(color);
-        if (txt != null) txt.setTextColor(color);
-        if (dotId != 0) {
-            View dot = findViewById(dotId);
-            if (dot != null) dot.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -283,65 +177,28 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         super.onResume();
         // Refresh the list whenever user returns to this activity
         loadTasks();
-        updateSidebarCategories();
     }
-
-    private void updateSidebarCategories() {
-        LinearLayout container = findViewById(R.id.containerSidebarCategories);
-        if (container == null) return;
-        container.removeAllViews();
-
-        List<com.example.taskmanagementapp.model.Category> categories = AppDatabase.getInstance(this).categoryDao().getAllCategories();
-        List<Task> allTasks = taskDao.getAllTasks();
-
-        for (com.example.taskmanagementapp.model.Category category : categories) {
-            View itemView = LayoutInflater.from(this).inflate(R.layout.item_sidebar_category, container, false);
-            View dot = itemView.findViewById(R.id.catDot);
-            TextView name = itemView.findViewById(R.id.catName);
-            TextView count = itemView.findViewById(R.id.catCount);
-
-            name.setText(category.getName());
-
-            // Set color
-            try {
-                android.graphics.drawable.GradientDrawable bg = (android.graphics.drawable.GradientDrawable) dot.getBackground();
-                bg.setColor(android.graphics.Color.parseColor(category.getColor()));
-            } catch (Exception ignored) {}
-
-            // Count tasks
-            int taskCount = 0;
-            for (Task task : allTasks) {
-                if (category.getName().equalsIgnoreCase(task.getCategory())) {
-                    taskCount++;
-                }
-            }
-            count.setText(taskCount + (taskCount == 1 ? " task" : " tasks"));
-
-            container.addView(itemView);
-        }
-    }
-
 
     private void updateFilter(String filter) {
         currentFilter = filter;
-        
+
         // Update UI
         filterAll.setBackgroundResource(filter.equals("All") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
         filterAll.setTextColor(filter.equals("All") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
-        
+
         filterToday.setBackgroundResource(filter.equals("Today") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
         filterToday.setTextColor(filter.equals("Today") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
-        
+
         filterOverdue.setBackgroundResource(filter.equals("Overdue") ? R.drawable.bg_filter_selected : R.drawable.bg_filter_unselected);
         filterOverdue.setTextColor(filter.equals("Overdue") ? Color.WHITE : ContextCompat.getColor(this, R.color.nav_unselected));
-        
+
         loadTasks();
     }
 
     private void loadTasks() {
         List<Task> allTasks = taskDao.getAllTasks();
         List<Task> filteredTasks = new ArrayList<>();
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         Calendar calToday = Calendar.getInstance();
         calToday.set(Calendar.HOUR_OF_DAY, 0);
@@ -353,8 +210,8 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         for (Task task : allTasks) {
             // Apply Search Query first
             if (!searchQuery.isEmpty()) {
-                if (!task.getTitle().toLowerCase().contains(searchQuery) && 
-                    (task.getDescription() == null || !task.getDescription().toLowerCase().contains(searchQuery))) {
+                if (!task.getTitle().toLowerCase().contains(searchQuery) &&
+                        (task.getDescription() == null || !task.getDescription().toLowerCase().contains(searchQuery))) {
                     continue;
                 }
             }
@@ -388,7 +245,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         } else {
             emptyStateLayout.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
-            
+
             SharedPreferences prefs = getSharedPreferences("AppSettings", Context.MODE_PRIVATE);
             boolean globalReminderEnabled = prefs.getBoolean("isReminderEnabled", true);
 
@@ -402,14 +259,14 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
             }
         }
     }
-    
+
     private boolean isSameDay(Date date1, Date date2) {
         Calendar cal1 = Calendar.getInstance();
         cal1.setTime(date1);
         Calendar cal2 = Calendar.getInstance();
         cal2.setTime(date2);
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-               cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 
     @Override
@@ -460,10 +317,10 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
     @Override
     public void onTaskDuplicate(Task task) {
-        Task duplicatedTask = new Task(0, task.getTitle() + " (Copy)", 
-                task.getDescription(), task.getDueDate(), 
+        Task duplicatedTask = new Task(0, task.getTitle() + " (Copy)",
+                task.getDescription(), task.getDueDate(),
                 task.getPriority(), task.getCategory(), false, task.isReminderEnabled());
-        
+
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         String now = sdf.format(new Date());
         duplicatedTask.setCreatedAt(now);

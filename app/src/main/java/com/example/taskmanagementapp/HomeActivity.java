@@ -1,6 +1,5 @@
 package com.example.taskmanagementapp;
 
-import com.example.taskmanagementapp.R;
 import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
@@ -13,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
@@ -45,14 +43,13 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         taskDao = AppDatabase.getInstance(this).taskDao();
-        drawerLayout = findViewById(R.id.drawerLayout);
 
         // Initialize UI components
         txtTotalCount = findViewById(R.id.txtTotalCount);
         txtCompletedCount = findViewById(R.id.txtCompletedCount);
         txtPendingCount = findViewById(R.id.txtPendingCount);
         txtOverdueCount = findViewById(R.id.txtOverdueCount);
-        
+
         progressCircle = findViewById(R.id.progressCircle);
         txtProgressPercent = findViewById(R.id.txtProgressPercent);
         txtDoneCount = findViewById(R.id.txtDoneCount);
@@ -61,7 +58,7 @@ public class HomeActivity extends AppCompatActivity {
         progressHigh = findViewById(R.id.progressHigh);
         progressMedium = findViewById(R.id.progressMedium);
         progressLow = findViewById(R.id.progressLow);
-        
+
         txtHighCount = findViewById(R.id.txtHighCount);
         txtMediumCount = findViewById(R.id.txtMediumCount);
         txtLowCount = findViewById(R.id.txtLowCount);
@@ -91,7 +88,7 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         // 2. Settings button
-        findViewById(R.id.btnSettingsTop).setOnClickListener(v -> 
+        findViewById(R.id.btnSettingsTop).setOnClickListener(v ->
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class)));
 
         // 3. Menu button
@@ -101,12 +98,11 @@ public class HomeActivity extends AppCompatActivity {
         setupSidebar();
         highlightSidebarItem(R.id.menuHome);
     }
-
     private void setupSidebar() {
         findViewById(R.id.btnCloseSidebar).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
-        
+
         findViewById(R.id.menuHome).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
-        
+
         findViewById(R.id.menuAllTasks).setOnClickListener(v -> {
             startActivity(new Intent(HomeActivity.this, TaskActivity.class));
             drawerLayout.closeDrawer(GravityCompat.START);
@@ -185,14 +181,12 @@ public class HomeActivity extends AppCompatActivity {
             if (dot != null) dot.setVisibility(View.VISIBLE);
         }
     }
-
     @Override
     protected void onResume() {
         super.onResume();
         updateDashboard();
         updateSidebarCategories();
     }
-
     private void updateSidebarCategories() {
         LinearLayout container = findViewById(R.id.containerSidebarCategories);
         if (container == null) return;
@@ -227,7 +221,6 @@ public class HomeActivity extends AppCompatActivity {
             container.addView(itemView);
         }
     }
-
     private void updateDashboard() {
         List<Task> allTasks = taskDao.getAllTasks();
         int total = allTasks.size();
@@ -269,7 +262,7 @@ public class HomeActivity extends AppCompatActivity {
                     if (!task.isCompleted() && taskDate.before(today)) {
                         overdueCount++;
                     }
-                    
+
                     if (isSameDay(taskDate, today)) {
                         addTaskToContainer(containerTodayTasks, task);
                         hasToday = true;
@@ -345,6 +338,6 @@ public class HomeActivity extends AppCompatActivity {
         Calendar cal2 = Calendar.getInstance();
         cal2.setTime(date2);
         return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) &&
-               cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
+                cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR);
     }
 }

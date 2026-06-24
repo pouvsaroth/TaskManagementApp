@@ -1,11 +1,5 @@
 package com.example.taskmanagementapp;
 
-
-import android.graphics.drawable.GradientDrawable;
-import android.widget.Toast;
-
-import com.example.taskmanagementapp.database.CategoryDao;
-import com.example.taskmanagementapp.model.Category;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -34,22 +28,10 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-
 public class TaskDetailActivity extends AppCompatActivity {
 
     private Task task;
     private TaskDao taskDao;
-    private CategoryDao categoryDao;
-    
-    private CheckBox cbTaskStatus;
-
-    private TextView tvCategoryName;
-    private View tagCategory;
-    private ImageView imgCategoryIcon;
-
     private static final int REQUEST_CODE_EDIT_TASK = 102;
 
     private CheckBox cbComplete;
@@ -62,32 +44,15 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        
+
         setContentView(R.layout.activity_task_detail);
 
         taskDao = AppDatabase.getInstance(this).taskDao();
-
-        categoryDao = AppDatabase.getInstance(this).categoryDao();
-
 
         if (getIntent().hasExtra("task")) {
             task = (Task) getIntent().getSerializableExtra("task");
         }
 
-        if (task == null) {
-            finish();
-            return;
-        }
-
-        initViews();
-        populateData();
-    }
-
-    private void initViews() {
-        findViewById(R.id.btnBack).setOnClickListener(v -> finish());
-        
-        cbTaskStatus = findViewById(R.id.cbTaskStatus);
-        tvTaskTitle = findViewById(R.id.tvTaskTitle);
         initViews();
         loadTaskData();
 
@@ -96,12 +61,12 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         cbComplete.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.setCompleted(isChecked);
-            
+
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             String now = sdf.format(new Date());
             task.setModifiedAt(now);
             tvModified.setText(now);
-            
+
             updateTaskStatusVisuals(isChecked);
             taskDao.updateTask(task);
             if (isChecked) ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
@@ -121,98 +86,16 @@ public class TaskDetailActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tvStatus);
         tvCreated = findViewById(R.id.tvCreated);
         tvModified = findViewById(R.id.tvModified);
-        
-        tagPriority = findViewById(R.id.tagPriority);
-        tagCategory = findViewById(R.id.tagCategory);
-        tvCategoryName = findViewById(R.id.tvCategoryName);
-        imgCategoryIcon = findViewById(R.id.imgCategoryIcon);
-
-        cbTaskStatus.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            task.setCompleted(isChecked);
-            task.setModifiedAt(System.currentTimeMillis());
-            taskDao.updateTask(task);
-            updateStatusText();
-            tvModified.setText(formatDate(task.getModifiedAt()));
-        });
-    }
-
-    private void populateData() {
-        tvTaskTitle.setText(task.getTitle());
-        tvDescription.setText(task.getDescription());
-        tvDueDate.setText(task.getDueDate());
-        cbTaskStatus.setChecked(task.isCompleted());
-        
-        updateStatusText();
-        
-        tvCreated.setText(formatDate(task.getCreatedAt()));
-        tvModified.setText(formatDate(task.getModifiedAt()));
-
-        // Priority Tag
-        tagPriority.setText(task.getPriority().equalsIgnoreCase("High") ? "! High" : task.getPriority());
-        if ("High".equalsIgnoreCase(task.getPriority())) {
-            tagPriority.setBackgroundResource(R.drawable.bg_tag_priority_high);
-        } else if ("Medium".equalsIgnoreCase(task.getPriority())) {
-            tagPriority.setBackgroundResource(R.drawable.bg_filter_selected); // Use existing blue/orange
-            tagPriority.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.priority_medium_bg));
-        } else {
-            tagPriority.setBackgroundResource(R.drawable.bg_filter_selected);
-            tagPriority.setBackgroundTintList(ContextCompat.getColorStateList(this, R.color.priority_low_bg));
-        }
-
-        // Category Tag
-        if (task.getCategory() != null && !task.getCategory().isEmpty()) {
-            tagCategory.setVisibility(View.VISIBLE);
-            tvCategoryName.setText(task.getCategory());
-            
-            Category category = categoryDao.getCategoryByName(task.getCategory());
-            if (category != null) {
-                try {
-                    int color = Color.parseColor(category.getColor());
-                    GradientDrawable bg = (GradientDrawable) tagCategory.getBackground();
-                    bg.setColor(adjustAlpha(color, 0.1f)); // Light background
-                    tvCategoryName.setTextColor(color);
-                    imgCategoryIcon.setColorFilter(color);
-                } catch (Exception e) {
-                    // Fallback
-                }
-            }
-        } else {
-            tagCategory.setVisibility(View.GONE);
-        }
-    }
-
-    private void updateStatusText() {
-        if (task.isCompleted()) {
-            tvStatus.setText("Completed");
-            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_completed));
-        } else {
-            tvStatus.setText("Pending");
-            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.status_pending));
-        }
-    }
-
-    private String formatDate(long timestamp) {
-        if (timestamp == 0) return "N/A";
-        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
-        return sdf.format(new Date(timestamp));
-    }
-
-    private int adjustAlpha(int color, float factor) {
-        int alpha = Math.round(Color.alpha(color) * factor);
-        int red = Color.red(color);
-        int green = Color.green(color);
-        int blue = Color.blue(color);
-        return Color.argb(alpha, red, green, blue);
     }
 
     private void loadTaskData() {
         if (task == null) return;
 
         tvTaskTitle.setText(task.getTitle());
-        tvDescription.setText(task.getDescription() != null && !task.getDescription().isEmpty() 
+        tvDescription.setText(task.getDescription() != null && !task.getDescription().isEmpty()
                 ? task.getDescription() : getString(R.string.no_description));
         tvDueDate.setText(task.getDueDate());
-        
+
         // Priority Badge
         tagPriority.setText("! " + task.getPriority());
         int priorityBg;
@@ -238,12 +121,12 @@ public class TaskDetailActivity extends AppCompatActivity {
             catBg = ContextCompat.getColor(this, R.color.filter_unselected_bg);
         }
         tagCategoryContainer.setBackgroundTintList(ColorStateList.valueOf(catBg));
-        
+
         // Text and Icon are always primary color (black in light mode)
         int textColor = ContextCompat.getColor(this, R.color.text_primary);
         tagCategory.setTextColor(textColor);
         ivCategoryIcon.setImageTintList(ColorStateList.valueOf(textColor));
-        
+
         cbComplete.setOnCheckedChangeListener(null);
         cbComplete.setChecked(task.isCompleted());
         updateTaskStatusVisuals(task.isCompleted());
@@ -258,10 +141,10 @@ public class TaskDetailActivity extends AppCompatActivity {
             taskDao.updateTask(task);
             ToastUtils.showCustomToast(this, isChecked ? getString(R.string.toast_reminder_enabled) : getString(R.string.toast_reminder_disabled));
         });
-        
+
         cbComplete.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.setCompleted(isChecked);
-            
+
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             String now = sdf.format(new Date());
             task.setModifiedAt(now);
@@ -293,7 +176,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         View popupView = LayoutInflater.from(this).inflate(R.layout.layout_task_detail_menu, null);
         PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        
+
         TextView tvMenuComplete = popupView.findViewById(R.id.tvMenuComplete);
         tvMenuComplete.setText(task.isCompleted() ? getString(R.string.menu_mark_pending) : getString(R.string.menu_mark_complete));
 
@@ -318,7 +201,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         popupView.findViewById(R.id.menuComplete).setOnClickListener(v -> {
             boolean newState = !task.isCompleted();
             task.setCompleted(newState);
-            
+
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             String now = sdf.format(new Date());
             task.setModifiedAt(now);

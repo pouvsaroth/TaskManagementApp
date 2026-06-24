@@ -1,17 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/app_main_background"
-    android:orientation="vertical">
+    android:background="@color/app_main_background">
 
-    <!-- Custom Toolbar -->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:paddingHorizontal="16dp">
     <!-- Flat Header -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -19,85 +13,11 @@
         android:layout_height="56dp"
         android:background="@color/nav_background"
         app:layout_constraintTop_toTopOf="parent">
-        <ImageView
-            android:id="@+id/btnBack"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_chevron_left"
-            app:tint="@color/nav_selected" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Task Details"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
-            android:textStyle="bold" />
-
-        <ImageView
-            android:id="@+id/btnMore"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_alignParentEnd="true"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_more_vert"
-            app:tint="@color/header_text_color" />
-
-    </RelativeLayout>
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="24dp">
-            <!-- Title Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
+            android:layout_height="match_parent">
 
-                <CheckBox
-                    android:id="@+id/cbTaskStatus"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:button="@drawable/custom_checkbox" />
-
-                <TextView
-                    android:id="@+id/tvTaskTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="My MDT Project"
-                    android:textColor="@color/text_primary"
-                    android:textSize="22sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- Tags Section -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/tagPriority"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bg_tag_priority_high"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp"
-                    android:text="! High"
-                    android:textColor="@color/white"
-                    android:textSize="12sp" />
             <ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="24dp"
@@ -110,54 +30,9 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:tint="@color/text_primary" />
 
-                <LinearLayout
-                    android:id="@+id/tagCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:background="@drawable/bg_tag_category"
-                    android:gravity="center_vertical"
-                    android:paddingHorizontal="8dp"
-                    android:paddingVertical="4dp">
-
-                    <ImageView
-                        android:id="@+id/imgCategoryIcon"
-                        android:layout_width="12dp"
-                        android:layout_height="12dp"
-                        android:src="@drawable/ic_heart"
-                        app:tint="@color/category_personal_text" />
-
-                    <TextView
-                        android:id="@+id/tvCategoryName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="4dp"
-                        android:text="Personal"
-                        android:textColor="@color/category_personal_text"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- Description Section -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32dp"
-                android:letterSpacing="0.1"
-                android:text="DESCRIPTION"
-                android:textColor="@color/text_muted"
-                android:textSize="12sp" />
-
-            <TextView
-                android:id="@+id/tvDescription"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:text="Will create an app called Task Management."
-                android:textColor="@color/text_primary"
-                android:textSize="16sp" />
                 android:text="@string/task_details_title"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -280,43 +155,10 @@
                         android:textStyle="bold" />
                 </LinearLayout>
             </LinearLayout>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/divider_color" />
-
-            <!-- Due Date Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:letterSpacing="0.1"
-                android:text="DUE DATE"
-                android:textColor="@color/text_muted"
-                android:textSize="12sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="12dp"
-                android:background="@drawable/bg_filter_unselected"
-                android:gravity="center_vertical"
-                android:paddingHorizontal="16dp">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:src="@drawable/ic_calendar" />
-
-                <TextView
-                    android:id="@+id/tvDueDate"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:text="June 4, 2026"
-                    android:textColor="@color/text_primary"
-                    android:textSize="16sp" />
                 android:background="@color/divider_color" />
 
             <!-- Description -->
@@ -436,36 +278,6 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/divider_color" />
-
-            <!-- Details Table Section -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:letterSpacing="0.1"
-                android:text="DETAILS"
-                android:textColor="@color/text_muted"
-                android:textSize="12sp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:orientation="vertical">
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Status"
-                        android:textColor="@color/text_muted"
-                        android:textSize="14sp" />
                 android:background="@color/divider_color" />
 
             <!-- Details Section -->
@@ -501,24 +313,6 @@
                         android:id="@+id/tvStatus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="Pending"
-                        android:textColor="@color/status_pending"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Created"
-                        android:textColor="@color/text_muted"
-                        android:textSize="14sp" />
                         tools:text="Completed"
                         android:textColor="@color/text_primary"
                         android:textStyle="bold"
@@ -544,24 +338,6 @@
                         android:id="@+id/tvCreated"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="May 31, 2026"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingVertical="8dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Modified"
-                        android:textColor="@color/text_muted"
-                        android:textSize="14sp" />
                         tools:text="May 28, 2026"
                         android:textColor="@color/text_primary" />
                 </LinearLayout>
@@ -577,22 +353,18 @@
                         android:layout_weight="1"
                         android:text="@string/label_modified"
                         android:textColor="@color/text_muted" />
+
                     <TextView
                         android:id="@+id/tvModified"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:text="May 31, 2026"
-                        android:textColor="@color/text_primary"
-                        android:textSize="14sp" />
-
-                </RelativeLayout>
                         tools:text="May 30, 2026"
                         android:textColor="@color/text_primary" />
                 </LinearLayout>
+
             </LinearLayout>
 
         </LinearLayout>
     </ScrollView>
-</LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
