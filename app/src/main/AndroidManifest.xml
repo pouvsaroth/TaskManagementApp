@@ -43,11 +43,6 @@
             android:name=".TaskDetailActivity"
             android:exported="false" />
 
-        <activity
-            android:name=".CategoryActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-
     </application>
 
 </manifest>

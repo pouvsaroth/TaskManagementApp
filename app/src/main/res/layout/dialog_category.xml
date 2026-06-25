@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="24dp">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:cardBackgroundColor="@color/nav_background"
+        app:strokeColor="@color/popup_border"
+        app:strokeWidth="1dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:id="@+id/dialogTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Create New Category"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Category name"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <EditText
+                android:id="@+id/etCategoryName"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_edit_text"
+                android:hint="e.g. Shopping, Health..."
+                android:paddingHorizontal="16dp"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_muted"
+                android:inputType="text"
+                android:maxLines="1"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Choose color"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="12dp" />
+
+            <LinearLayout
+                android:id="@+id/colorSelectionRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:layout_marginBottom="32dp">
+
+                <!-- Red -->
+                <FrameLayout
+                    android:id="@+id/containerColorRed"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="2dp"
+                    android:padding="4dp">
+                    <View android:id="@+id/colorRed" android:layout_width="34dp" android:layout_height="34dp" android:background="@drawable/bg_color_circle" android:backgroundTint="#EF4444" />
+                </FrameLayout>
+
+                <!-- Orange -->
+                <FrameLayout
+                    android:id="@+id/containerColorOrange"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="2dp"
+                    android:padding="4dp">
+                    <View android:id="@+id/colorOrange" android:layout_width="34dp" android:layout_height="34dp" android:background="@drawable/bg_color_circle" android:backgroundTint="#F59E0B" />
+                </FrameLayout>
+
+                <!-- Green -->
+                <FrameLayout
+                    android:id="@+id/containerColorGreen"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="2dp"
+                    android:padding="4dp">
+                    <View android:id="@+id/colorGreen" android:layout_width="34dp" android:layout_height="34dp" android:background="@drawable/bg_color_circle" android:backgroundTint="#10B981" />
+                </FrameLayout>
+
+                <!-- Blue -->
+                <FrameLayout
+                    android:id="@+id/containerColorBlue"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="2dp"
+                    android:padding="4dp">
+                    <View android:id="@+id/colorBlue" android:layout_width="34dp" android:layout_height="34dp" android:background="@drawable/bg_color_circle" android:backgroundTint="#0EA5E9" />
+                </FrameLayout>
+
+                <!-- Purple -->
+                <FrameLayout
+                    android:id="@+id/containerColorPurple"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_marginEnd="2dp"
+                    android:padding="4dp">
+                    <View android:id="@+id/colorPurple" android:layout_width="34dp" android:layout_height="34dp" android:background="@drawable/bg_color_circle" android:backgroundTint="#8B5CF6" />
+                </FrameLayout>
+
+                <!-- Pink -->
+                <FrameLayout
+                    android:id="@+id/containerColorPink"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:padding="4dp">
+                    <View android:id="@+id/colorPink" android:layout_width="34dp" android:layout_height="34dp" android:background="@drawable/bg_color_circle" android:backgroundTint="#EC4899" />
+                </FrameLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/text_muted"
+                    app:strokeColor="@color/divider_color"
+                    app:strokeWidth="1dp"
+                    app:cornerRadius="12dp"
+                    android:layout_marginEnd="12dp" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/nav_selected"
+                    android:text="Create"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    app:cornerRadius="12dp" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+</FrameLayout>

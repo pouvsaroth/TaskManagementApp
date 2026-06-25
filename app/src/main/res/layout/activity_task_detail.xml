@@ -20,9 +20,10 @@
 
             <ImageView
                 android:id="@+id/btnBack"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
                 android:src="@drawable/ic_chevron_left"
                 android:contentDescription="Back"
                 app:layout_constraintStart_toStartOf="parent"
@@ -137,13 +138,7 @@
                     android:paddingVertical="4dp"
                     android:background="@drawable/bg_badge">
 
-                    <ImageView
-                        android:id="@+id/ivCategoryIcon"
-                        android:layout_width="14dp"
-                        android:layout_height="14dp"
-                        android:src="@drawable/ic_tasks"
-                        android:layout_marginEnd="4dp"
-                        app:tint="@color/text_primary" />
+
 
                     <TextView
                         android:id="@+id/tagCategory"

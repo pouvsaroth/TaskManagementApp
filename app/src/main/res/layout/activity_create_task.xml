@@ -25,6 +25,7 @@
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_chevron_left"
+                android:contentDescription="Back"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -34,9 +35,9 @@
                 android:id="@+id/btnBackText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back"
                 android:textColor="@color/nav_selected"
                 android:textSize="16sp"
+                android:textStyle="bold"
                 android:layout_marginStart="4dp"
                 app:layout_constraintStart_toEndOf="@id/btnBack"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,8 +47,9 @@
                 android:id="@+id/titleText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Task"
+                android:text="@string/create_task_title"
                 android:textSize="18sp"
+                android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,6 +63,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_check"
                 android:layout_marginEnd="16dp"
+                android:contentDescription="Save"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -73,6 +76,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:fillViewport="true"
         app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintBottom_toTopOf="@id/bottomActionContainer">
 
@@ -86,7 +90,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Task Title"
+                android:text="@string/label_task_title"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
@@ -95,10 +99,11 @@
                 android:id="@+id/etTaskTitle"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
-                android:hint="Enter task title"
                 android:background="@drawable/bg_edit_text"
                 android:paddingHorizontal="12dp"
                 android:inputType="text"
+                android:hint="@string/hint_task_title"
+                android:textSize="14sp"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_muted"
                 android:layout_marginBottom="16dp" />
@@ -107,7 +112,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Description"
+                android:text="@string/label_description"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
@@ -115,13 +120,15 @@
             <EditText
                 android:id="@+id/etDescription"
                 android:layout_width="match_parent"
-                android:layout_height="120dp"
-                android:hint="Add description (optional)"
+                android:layout_height="wrap_content"
+                android:minHeight="120dp"
                 android:textColorHint="@color/text_muted"
                 android:textColor="@color/text_primary"
                 android:background="@drawable/bg_edit_text"
                 android:padding="12dp"
                 android:gravity="top"
+                android:hint="@string/hint_description"
+                android:textSize="14sp"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="16dp" />
 
@@ -129,7 +136,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Due Date"
+                android:text="@string/label_due_date"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
@@ -150,13 +157,15 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="May 31, 2026"
-                    android:textColor="@color/text_primary" />
+                    android:text="@string/hint_due_date"
+                    android:textSize="14sp"
+                    android:textColor="@color/text_muted" />
 
                 <ImageView
                     android:layout_width="20dp"
                     android:layout_height="20dp"
                     android:src="@drawable/ic_calendar"
+                    android:contentDescription="Select Date"
                     app:tint="@color/text_muted" />
             </LinearLayout>
 
@@ -186,7 +195,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Priority"
+                android:text="@string/label_priority"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
@@ -202,7 +211,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category"
+                android:text="@string/label_category"
                 android:textStyle="bold"
                 android:textColor="@color/text_primary"
                 android:layout_marginBottom="8dp" />
@@ -228,27 +237,28 @@
         android:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <TextView
+        <Button
             android:id="@+id/btnCancel"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_edit_text"
-            android:gravity="center"
-            android:text="Cancel"
+            android:text="@string/btn_cancel"
+            android:textAllCaps="false"
             android:textColor="@color/text_muted"
+            app:backgroundTint="@color/nav_background"
+            app:strokeColor="@color/divider_color"
+            app:strokeWidth="1dp"
             android:layout_marginEnd="8dp" />
 
-        <TextView
+        <Button
             android:id="@+id/btnSave"
             android:layout_width="0dp"
             android:layout_height="52dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_filter_selected"
-            android:gravity="center"
-            android:text="Save Task"
+            android:text="@string/btn_save_task"
+            android:textAllCaps="false"
             android:textColor="@color/white"
-            android:textStyle="bold" />
+            app:backgroundTint="@color/nav_selected" />
 
     </LinearLayout>
 

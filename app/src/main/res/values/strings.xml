@@ -64,6 +64,44 @@
     <string name="toast_task_completed">Task completed!</string>
     <string name="toast_reminder_enabled">Reminder enabled</string>
     <string name="toast_reminder_disabled">Reminder disabled</string>
+    <string name="toast_coming_soon">Coming soon!</string>
+    <string name="toast_help_support">Help &amp; Support coming soon!</string>
+    <string name="toast_privacy_policy_soon">Privacy Policy coming soon!</string>
+    <string name="toast_terms_of_service_soon">Terms of Service coming soon!</string>
+    <string name="toast_task_updated">Task updated</string>
+    <string name="toast_task_created">Task created</string>
+    <string name="toast_category_created">Category created</string>
+    <string name="toast_category_updated">Category updated</string>
+    <string name="toast_category_duplicated">Category duplicated</string>
+    <string name="toast_category_deleted">Category deleted</string>
+
+    <!-- Create/Edit Task Screen -->
+    <string name="create_task_title">New Task</string>
+    <string name="edit_task_title">Edit Task</string>
+    <string name="label_task_title">Task Title</string>
+    <string name="hint_task_title">Enter task title</string>
+    <string name="hint_description">Add description (optional)</string>
+    <string name="hint_due_date">MMMM dd, yyyy</string>
+    <string name="label_priority">Priority</string>
+    <string name="label_category">Category</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="btn_save_task">Save Task</string>
+    <string name="error_title_required">Please enter a title</string>
+
+    <!-- Sidebar -->
+    <string name="sidebar_menu">Menu</string>
+    <string name="label_quick_access">QUICK ACCESS</string>
+    <string name="label_categories">CATEGORIES</string>
+    <string name="btn_add_category">+ Add</string>
+    <string name="menu_all_tasks">All Tasks</string>
+    <string name="menu_completed">Completed</string>
+    <string name="menu_pending">Pending</string>
+    <string name="menu_help_support">Help &amp; Support</string>
+    <string name="task_count_singular">%d task</string>
+    <string name="task_count_plural">%d tasks</string>
 
 </resources>
+
+
+
 

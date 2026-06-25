@@ -44,7 +44,7 @@ public class TaskDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        
         setContentView(R.layout.activity_task_detail);
 
         taskDao = AppDatabase.getInstance(this).taskDao();
@@ -61,12 +61,12 @@ public class TaskDetailActivity extends AppCompatActivity {
 
         cbComplete.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.setCompleted(isChecked);
-
+            
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             String now = sdf.format(new Date());
             task.setModifiedAt(now);
             tvModified.setText(now);
-
+            
             updateTaskStatusVisuals(isChecked);
             taskDao.updateTask(task);
             if (isChecked) ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
@@ -80,7 +80,6 @@ public class TaskDetailActivity extends AppCompatActivity {
         tagPriority = findViewById(R.id.tagPriority);
         tagCategory = findViewById(R.id.tagCategory);
         tagCategoryContainer = findViewById(R.id.tagCategoryContainer);
-        ivCategoryIcon = findViewById(R.id.ivCategoryIcon);
         tvDescription = findViewById(R.id.tvDescription);
         tvDueDate = findViewById(R.id.tvDueDate);
         tvStatus = findViewById(R.id.tvStatus);
@@ -92,10 +91,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         if (task == null) return;
 
         tvTaskTitle.setText(task.getTitle());
-        tvDescription.setText(task.getDescription() != null && !task.getDescription().isEmpty()
+        tvDescription.setText(task.getDescription() != null && !task.getDescription().isEmpty() 
                 ? task.getDescription() : getString(R.string.no_description));
         tvDueDate.setText(task.getDueDate());
-
+        
         // Priority Badge
         tagPriority.setText("! " + task.getPriority());
         int priorityBg;
@@ -121,12 +120,11 @@ public class TaskDetailActivity extends AppCompatActivity {
             catBg = ContextCompat.getColor(this, R.color.filter_unselected_bg);
         }
         tagCategoryContainer.setBackgroundTintList(ColorStateList.valueOf(catBg));
-
+        
         // Text and Icon are always primary color (black in light mode)
         int textColor = ContextCompat.getColor(this, R.color.text_primary);
         tagCategory.setTextColor(textColor);
-        ivCategoryIcon.setImageTintList(ColorStateList.valueOf(textColor));
-
+        
         cbComplete.setOnCheckedChangeListener(null);
         cbComplete.setChecked(task.isCompleted());
         updateTaskStatusVisuals(task.isCompleted());
@@ -141,10 +139,10 @@ public class TaskDetailActivity extends AppCompatActivity {
             taskDao.updateTask(task);
             ToastUtils.showCustomToast(this, isChecked ? getString(R.string.toast_reminder_enabled) : getString(R.string.toast_reminder_disabled));
         });
-
+        
         cbComplete.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.setCompleted(isChecked);
-
+            
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             String now = sdf.format(new Date());
             task.setModifiedAt(now);
@@ -176,7 +174,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         View popupView = LayoutInflater.from(this).inflate(R.layout.layout_task_detail_menu, null);
         PopupWindow popupWindow = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         popupWindow.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
+        
         TextView tvMenuComplete = popupView.findViewById(R.id.tvMenuComplete);
         tvMenuComplete.setText(task.isCompleted() ? getString(R.string.menu_mark_pending) : getString(R.string.menu_mark_complete));
 
@@ -201,7 +199,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         popupView.findViewById(R.id.menuComplete).setOnClickListener(v -> {
             boolean newState = !task.isCompleted();
             task.setCompleted(newState);
-
+            
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             String now = sdf.format(new Date());
             task.setModifiedAt(now);

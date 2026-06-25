@@ -18,6 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
 
+import com.example.taskmanagementapp.util.ToastUtils;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -104,7 +105,7 @@ public class SettingsActivity extends AppCompatActivity {
         timeDropdown.setOnItemClickListener((parent, view, position, id) -> {
             String selectedTime = (String) parent.getItemAtPosition(position);
             sharedPreferences.edit().putString(KEY_SELECTED_TIME, selectedTime).apply();
-            Toast.makeText(this, "Notification set to: " + selectedTime, Toast.LENGTH_SHORT).show();
+            ToastUtils.showCustomToast(this, "Notification set to: " + selectedTime);
         });
 
         // 5. កំណត់ការ បិទ/បើក ប្រអប់ម៉ោងផ្អែកលើ Switch
@@ -178,7 +179,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             btnPrivacyPolicy.setOnClickListener(v -> {
-                Toast.makeText(SettingsActivity.this, "Privacy Policy Coming soon!", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(SettingsActivity.this, getString(R.string.toast_privacy_policy_soon));
             });
 
         }
@@ -218,7 +219,7 @@ public class SettingsActivity extends AppCompatActivity {
             });
 
             btnTermsOfService.setOnClickListener(v -> {
-                Toast.makeText(SettingsActivity.this, "Terms of Service Coming soon!", Toast.LENGTH_SHORT).show();
+                ToastUtils.showCustomToast(SettingsActivity.this, getString(R.string.toast_terms_of_service_soon));
             });
         }
     }

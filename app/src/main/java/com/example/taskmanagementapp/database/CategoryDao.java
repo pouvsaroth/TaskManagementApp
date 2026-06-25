@@ -10,11 +10,11 @@ import java.util.List;
 
 @Dao
 public interface CategoryDao {
-    @Query("SELECT * FROM categories ORDER BY id ASC")
+    @Query("SELECT * FROM categories ORDER BY name ASC")
     List<Category> getAllCategories();
 
-    @Query("SELECT * FROM categories WHERE name = :name LIMIT 1")
-    Category getCategoryByName(String name);
+    @Query("SELECT * FROM categories WHERE id = :categoryId")
+    Category getCategoryById(int categoryId);
 
     @Insert
     long addCategory(Category category);

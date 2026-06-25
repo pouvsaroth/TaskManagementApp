@@ -9,7 +9,7 @@ public class Category implements Serializable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
-    private String color; // Stored as Hex string like #EF4444
+    private String color; // Hex color string
 
     public Category() {}
 

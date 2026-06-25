@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#1E8CB8">
+    android:background="@color/splash_bg">
 
     <LinearLayout
         android:id="@+id/logoContainer"
@@ -22,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Task Manager"
-            android:textColor="#FFFFFF"
+            android:textColor="@color/white"
             android:textSize="32sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp" />
@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Stay organized, stay productive"
-            android:textColor="#E0E0E0"
+            android:textColor="@color/splash_text_secondary"
             android:textSize="16sp"
             android:layout_marginTop="8dp" />
     </LinearLayout>
@@ -43,7 +43,7 @@
         android:layout_below="@id/logoContainer"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="48dp"
-        android:indeterminateTint="#FFFFFF" />
+        android:indeterminateTint="@color/white" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -58,14 +58,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="v1.0.0"
-            android:textColor="#B0E5F2"
+            android:textColor="@color/splash_footer_text"
             android:textSize="12sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="by Task Manager Inc."
-            android:textColor="#B0E5F2"
+            android:textColor="@color/splash_footer_text"
             android:textSize="12sp"
             android:layout_marginTop="4dp" />
     </LinearLayout>
