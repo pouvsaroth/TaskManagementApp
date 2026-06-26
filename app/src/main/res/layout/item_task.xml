@@ -5,9 +5,9 @@
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
     android:layout_marginHorizontal="2dp"
-    app:cardCornerRadius="5dp"
-    app:cardElevation="0dp"
-    android:background="?attr/selectableItemBackgroundBorderless"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="2dp"
+    android:background="?attr/selectableItemBackground"
     app:cardBackgroundColor="@color/card_background_color">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -35,7 +35,7 @@
             android:textColor="@color/text_primary"
             android:layout_marginStart="12dp"
             app:layout_constraintStart_toEndOf="@id/taskCheckbox"
-            app:layout_constraintEnd_toStartOf="@id/menuIcon"
+            app:layout_constraintEnd_toStartOf="@id/ivReminderIcon"
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
@@ -44,20 +44,21 @@
             android:layout_height="14dp"
             android:src="@drawable/ic_calendar"
             android:layout_marginStart="12dp"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="8dp"
             app:layout_constraintStart_toEndOf="@id/taskCheckbox"
             app:layout_constraintTop_toBottomOf="@id/taskTitle"
             app:tint="@color/text_muted" />
 
         <TextView
             android:id="@+id/taskDate"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Today, 2:00 PM"
             android:textSize="12sp"
             android:textColor="@color/text_muted"
             android:layout_marginStart="4dp"
             app:layout_constraintStart_toEndOf="@id/ivCalendarIcon"
+            app:layout_constraintEnd_toStartOf="@id/ivReminderIcon"
             app:layout_constraintTop_toTopOf="@id/ivCalendarIcon"
             app:layout_constraintBottom_toBottomOf="@id/ivCalendarIcon" />
 
@@ -71,10 +72,10 @@
             android:background="@drawable/bg_badge"
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="4dp"
-            app:layout_constraintStart_toEndOf="@id/taskDate"
-            app:layout_constraintTop_toBottomOf="@id/taskTitle" />
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintStart_toEndOf="@id/taskCheckbox"
+            app:layout_constraintTop_toBottomOf="@id/ivCalendarIcon" />
 
         <TextView
             android:id="@+id/tagWork"
@@ -87,9 +88,8 @@
             android:paddingHorizontal="8dp"
             android:paddingVertical="4dp"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="4dp"
             app:layout_constraintStart_toEndOf="@id/tagHigh"
-            app:layout_constraintTop_toBottomOf="@id/taskTitle" />
+            app:layout_constraintTop_toTopOf="@id/tagHigh" />
 
         <ImageView
             android:id="@+id/menuIcon"
@@ -99,7 +99,6 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:tint="@color/text_primary" />
 
         <ImageView
@@ -111,8 +110,8 @@
             android:visibility="gone"
             android:layout_marginEnd="8dp"
             app:layout_constraintEnd_toStartOf="@id/menuIcon"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="@id/menuIcon"
+            app:layout_constraintBottom_toBottomOf="@id/menuIcon"
             app:tint="@color/icon_green" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

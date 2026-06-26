@@ -23,6 +23,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
+import com.example.taskmanagementapp.util.ReminderManager;
 import com.example.taskmanagementapp.util.ToastUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -38,7 +39,6 @@ public class TaskDetailActivity extends AppCompatActivity {
     private SwitchCompat switchTaskReminder;
     private TextView tvTaskTitle, tagPriority, tagCategory, tvDescription, tvDueDate, tvStatus, tvCreated, tvModified;
     private View tagCategoryContainer;
-    private ImageView ivCategoryIcon;
 
 
     @Override
@@ -69,6 +69,7 @@ public class TaskDetailActivity extends AppCompatActivity {
             
             updateTaskStatusVisuals(isChecked);
             taskDao.updateTask(task);
+            ReminderManager.setReminder(this, task);
             if (isChecked) ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
         });
     }
@@ -93,7 +94,12 @@ public class TaskDetailActivity extends AppCompatActivity {
         tvTaskTitle.setText(task.getTitle());
         tvDescription.setText(task.getDescription() != null && !task.getDescription().isEmpty() 
                 ? task.getDescription() : getString(R.string.no_description));
-        tvDueDate.setText(task.getDueDate());
+        
+        String displayDate = task.getDueDate();
+        if (task.getDueTime() != null && !task.getDueTime().isEmpty()) {
+            displayDate += ", " + task.getDueTime();
+        }
+        tvDueDate.setText(displayDate);
         
         // Priority Badge
         tagPriority.setText("! " + task.getPriority());
@@ -137,6 +143,7 @@ public class TaskDetailActivity extends AppCompatActivity {
         switchTaskReminder.setOnCheckedChangeListener((buttonView, isChecked) -> {
             task.setReminderEnabled(isChecked);
             taskDao.updateTask(task);
+            ReminderManager.setReminder(this, task);
             ToastUtils.showCustomToast(this, isChecked ? getString(R.string.toast_reminder_enabled) : getString(R.string.toast_reminder_disabled));
         });
         
@@ -150,6 +157,7 @@ public class TaskDetailActivity extends AppCompatActivity {
 
             updateTaskStatusVisuals(isChecked);
             taskDao.updateTask(task);
+            ReminderManager.setReminder(this, task);
             if (isChecked) ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
         });
     }
@@ -186,12 +194,14 @@ public class TaskDetailActivity extends AppCompatActivity {
         });
 
         popupView.findViewById(R.id.menuDuplicate).setOnClickListener(v -> {
-            Task copy = new Task(0, task.getTitle() + " (Copy)", task.getDescription(), task.getDueDate(), task.getPriority(), task.getCategory(), false);
+            Task copy = new Task(0, task.getTitle() + " (Copy)", task.getDescription(), task.getDueDate(), task.getDueTime(), task.getPriority(), task.getCategory(), false, task.isReminderEnabled());
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             String now = sdf.format(new Date());
             copy.setCreatedAt(now);
             copy.setModifiedAt(now);
-            taskDao.addTask(copy);
+            int id = (int) taskDao.addTask(copy);
+            copy.setId(id);
+            ReminderManager.setReminder(this, copy);
             ToastUtils.showCustomToast(this, getString(R.string.toast_task_duplicated));
             popupWindow.dismiss();
         });
@@ -231,7 +241,9 @@ public class TaskDetailActivity extends AppCompatActivity {
         }
         dialogView.findViewById(R.id.btnCancel).setOnClickListener(v -> dialog.dismiss());
         dialogView.findViewById(R.id.btnDelete).setOnClickListener(v -> {
+            int id = task.getId();
             taskDao.deleteTask(task);
+            ReminderManager.cancelReminder(this, id);
             ToastUtils.showCustomToast(this, getString(R.string.toast_task_deleted));
             dialog.dismiss();
             finish();

@@ -1,5 +1,6 @@
 package com.example.taskmanagementapp;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,8 +22,10 @@ import com.example.taskmanagementapp.database.CategoryDao;
 import com.example.taskmanagementapp.model.Category;
 import com.example.taskmanagementapp.model.Task;
 
+import com.example.taskmanagementapp.util.ReminderManager;
 import com.example.taskmanagementapp.util.ToastUtils;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -30,7 +33,7 @@ import java.util.Locale;
 public class CreateTaskActivity extends AppCompatActivity {
 
     private EditText etTaskTitle, etDescription;
-    private TextView tvDueDate, titleText;
+    private TextView tvDueDate, tvDueTime, titleText;
     private Spinner spinnerPriority, spinnerCategory;
     private SwitchCompat switchTaskReminder;
     private TaskDao taskDao;
@@ -50,6 +53,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         etTaskTitle = findViewById(R.id.etTaskTitle);
         etDescription = findViewById(R.id.etDescription);
         tvDueDate = findViewById(R.id.tvDueDate);
+        tvDueTime = findViewById(R.id.tvDueTime);
         titleText = findViewById(R.id.titleText);
         spinnerPriority = findViewById(R.id.spinnerPriority);
         spinnerCategory = findViewById(R.id.spinnerCategory);
@@ -84,6 +88,9 @@ public class CreateTaskActivity extends AppCompatActivity {
 
         // Date Picker
         findViewById(R.id.btnDatePicker).setOnClickListener(v -> showDatePicker());
+
+        // Time Picker
+        findViewById(R.id.btnTimePicker).setOnClickListener(v -> showTimePicker());
 
         // Save buttons
         View.OnClickListener saveListener = v -> saveTask();
@@ -144,6 +151,23 @@ public class CreateTaskActivity extends AppCompatActivity {
         datePicker.show(getSupportFragmentManager(), "DatePicker");
     }
 
+    private void showTimePicker() {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute1) -> {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            cal.set(Calendar.MINUTE, minute1);
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+            tvDueTime.setText(sdf.format(cal.getTime()));
+            tvDueTime.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        }, hour, minute, false);
+        timePickerDialog.show();
+    }
+
     private void saveTask() {
         String title = etTaskTitle.getText().toString().trim();
         String description = etDescription.getText().toString().trim();
@@ -170,6 +194,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             existingTask.setTitle(title);
             existingTask.setDescription(description);
             existingTask.setDueDate(dueDate);
+            existingTask.setDueTime(dueTime);
             existingTask.setPriority(priority);
             existingTask.setCategory(category);
             existingTask.setReminderEnabled(reminderEnabled);
@@ -178,7 +203,7 @@ public class CreateTaskActivity extends AppCompatActivity {
             taskDao.updateTask(existingTask);
             ToastUtils.showCustomToast(this, getString(R.string.toast_task_updated));
         } else {
-            Task newTask = new Task(0, title, description, dueDate, priority, category, false, reminderEnabled);
+            Task newTask = new Task(0, title, description, dueDate, dueTime, priority, category, false, reminderEnabled);
             newTask.setCreatedAt(now);
             newTask.setModifiedAt(now);
 

@@ -132,7 +132,7 @@
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Due Date -->
+            <!-- Due Date & Time -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -142,18 +142,13 @@
                 android:layout_marginBottom="8dp" />
 
             <LinearLayout
-                android:id="@+id/btnDatePicker"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
-                android:background="@drawable/bg_edit_text"
-                android:paddingHorizontal="12dp"
-                android:gravity="center_vertical"
-                android:clickable="true"
-                android:focusable="true"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
                 android:layout_marginBottom="16dp">
 
-                <TextView
-                    android:id="@+id/tvDueDate"
+                <LinearLayout
+                    android:id="@+id/btnDatePicker"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"

@@ -209,19 +209,21 @@
                     android:orientation="horizontal"
                     android:gravity="center_vertical">
 
-                    <androidx.cardview.widget.CardView
+                    <com.google.android.material.card.MaterialCardView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
                         app:cardCornerRadius="8dp"
                         app:cardElevation="0dp"
-                        app:cardBackgroundColor="@color/card_background_color">
+                        app:cardBackgroundColor="@color/card_background_color"
+                        app:strokeColor="@color/popup_border"
+                        app:strokeWidth="1dp">
                         <ImageView
                             android:layout_width="24dp"
                             android:layout_height="24dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_calendar"
                             app:tint="@color/text_muted" />
-                    </androidx.cardview.widget.CardView>
+                    </com.google.android.material.card.MaterialCardView>
 
                     <TextView
                         android:id="@+id/tvDueDate"

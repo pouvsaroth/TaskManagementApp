@@ -337,7 +337,9 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         dialogView.findViewById(R.id.btnCancel).setOnClickListener(v -> dialog.dismiss());
         dialogView.findViewById(R.id.btnDelete).setOnClickListener(v -> {
+            int id = task.getId();
             taskDao.deleteTask(task);
+            ReminderManager.cancelReminder(this, id);
             loadTasks();
             ToastUtils.showCustomToast(this, getString(R.string.toast_task_deleted));
             dialog.dismiss();
@@ -349,7 +351,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     @Override
     public void onTaskDuplicate(Task task) {
         Task duplicatedTask = new Task(0, task.getTitle() + " (Copy)", 
-                task.getDescription(), task.getDueDate(), 
+                task.getDescription(), task.getDueDate(), task.getDueTime(),
                 task.getPriority(), task.getCategory(), false, task.isReminderEnabled());
         
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
@@ -357,7 +359,9 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         duplicatedTask.setCreatedAt(now);
         duplicatedTask.setModifiedAt(now);
 
-        taskDao.addTask(duplicatedTask);
+        int id = (int) taskDao.addTask(duplicatedTask);
+        duplicatedTask.setId(id);
+        ReminderManager.setReminder(this, duplicatedTask);
         loadTasks();
         ToastUtils.showCustomToast(this, getString(R.string.toast_task_duplicated));
     }
@@ -367,6 +371,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         task.setModifiedAt(sdf.format(new Date()));
         taskDao.updateTask(task);
+        ReminderManager.setReminder(this, task);
         if (task.isCompleted()) {
             ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
         }
@@ -375,6 +380,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     @Override
     public void onTaskReminderToggled(Task task) {
         taskDao.updateTask(task);
+        ReminderManager.setReminder(this, task);
         if (task.isReminderEnabled()) {
             ToastUtils.showCustomToast(this, getString(R.string.toast_reminder_enabled));
         } else {

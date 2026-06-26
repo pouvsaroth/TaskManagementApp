@@ -97,7 +97,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         public void bind(Task task, OnTaskClickListener listener, boolean globalReminderEnabled) {
             tvTitle.setText(task.getTitle());
-            tvDate.setText(task.getDueDate());
+            
+            String displayDate = task.getDueDate();
+            if (task.getDueTime() != null && !task.getDueTime().isEmpty()) {
+                displayDate += ", " + task.getDueTime();
+            }
+            tvDate.setText(displayDate);
+
             tagPriority.setText(task.getPriority());
             tagCategory.setText(task.getCategory());
 

@@ -1,6 +1,7 @@
 package com.example.taskmanagementapp.model;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 import java.io.Serializable;
 
@@ -11,6 +12,7 @@ public class Task implements Serializable {
     private String title;
     private String description;
     private String dueDate;
+    private String dueTime;
     private String priority;
     private String category;
     private boolean isCompleted;
@@ -20,15 +22,18 @@ public class Task implements Serializable {
 
     public Task() {}
 
+    @Ignore
     public Task(int id, String title, String description, String dueDate, String priority, String category, boolean isCompleted) {
-        this(id, title, description, dueDate, priority, category, isCompleted, false);
+        this(id, title, description, dueDate, "", priority, category, isCompleted, false);
     }
 
-    public Task(int id, String title, String description, String dueDate, String priority, String category, boolean isCompleted, boolean reminderEnabled) {
+    @Ignore
+    public Task(int id, String title, String description, String dueDate, String dueTime, String priority, String category, boolean isCompleted, boolean reminderEnabled) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
+        this.dueTime = dueTime;
         this.priority = priority;
         this.category = category;
         this.isCompleted = isCompleted;
@@ -47,6 +52,9 @@ public class Task implements Serializable {
 
     public String getDueDate() { return dueDate; }
     public void setDueDate(String dueDate) { this.dueDate = dueDate; }
+
+    public String getDueTime() { return dueTime; }
+    public void setDueTime(String dueTime) { this.dueTime = dueTime; }
 
     public String getPriority() { return priority; }
     public void setPriority(String priority) { this.priority = priority; }
