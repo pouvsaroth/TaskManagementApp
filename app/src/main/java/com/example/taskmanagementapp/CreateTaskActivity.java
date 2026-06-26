@@ -1,5 +1,6 @@
 package com.example.taskmanagementapp;
 
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -13,23 +14,30 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.content.ContextCompat;
 
 import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.TaskDao;
+import com.example.taskmanagementapp.database.CategoryDao;
+import com.example.taskmanagementapp.model.Category;
 import com.example.taskmanagementapp.model.Task;
 
+import com.example.taskmanagementapp.util.ReminderManager;
 import com.example.taskmanagementapp.util.ToastUtils;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class CreateTaskActivity extends AppCompatActivity {
 
     private EditText etTaskTitle, etDescription;
-    private TextView tvDueDate, titleText;
+    private TextView tvDueDate, tvDueTime, titleText;
     private Spinner spinnerPriority, spinnerCategory;
     private SwitchCompat switchTaskReminder;
     private TaskDao taskDao;
+    private CategoryDao categoryDao;
     private Task existingTask;
     private boolean isEditMode = false;
 
@@ -39,11 +47,13 @@ public class CreateTaskActivity extends AppCompatActivity {
         setContentView(R.layout.activity_create_task);
 
         taskDao = AppDatabase.getInstance(this).taskDao();
+        categoryDao = AppDatabase.getInstance(this).categoryDao();
 
         // Initialize views
         etTaskTitle = findViewById(R.id.etTaskTitle);
         etDescription = findViewById(R.id.etDescription);
         tvDueDate = findViewById(R.id.tvDueDate);
+        tvDueTime = findViewById(R.id.tvDueTime);
         titleText = findViewById(R.id.titleText);
         spinnerPriority = findViewById(R.id.spinnerPriority);
         spinnerCategory = findViewById(R.id.spinnerCategory);
@@ -61,10 +71,7 @@ public class CreateTaskActivity extends AppCompatActivity {
         spinnerPriority.setAdapter(priorityAdapter);
         spinnerPriority.setSelection(1); // Default to Medium
 
-        String[] categories = {"Work", "Personal", "Study", "Other"};
-        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categories);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerCategory.setAdapter(categoryAdapter);
+        setupCategorySpinner();
 
         // Check for edit mode
         Intent intent = getIntent();
@@ -82,17 +89,47 @@ public class CreateTaskActivity extends AppCompatActivity {
         // Date Picker
         findViewById(R.id.btnDatePicker).setOnClickListener(v -> showDatePicker());
 
+        // Time Picker
+        findViewById(R.id.btnTimePicker).setOnClickListener(v -> showTimePicker());
+
         // Save buttons
         View.OnClickListener saveListener = v -> saveTask();
         findViewById(R.id.btnSave).setOnClickListener(saveListener);
         findViewById(R.id.btnSaveTop).setOnClickListener(saveListener);
     }
 
+    private void setupCategorySpinner() {
+        List<Category> categories = categoryDao.getAllCategories();
+        if (categories.isEmpty()) {
+            categoryDao.addCategory(new Category("Work", "#EF4444"));
+            categoryDao.addCategory(new Category("Design", "#0EA5E9"));
+            categoryDao.addCategory(new Category("Personal", "#10B981"));
+            categoryDao.addCategory(new Category("Development", "#8B5CF6"));
+            categories = categoryDao.getAllCategories();
+        }
+
+        String[] categoryNames = new String[categories.size()];
+        for (int i = 0; i < categories.size(); i++) {
+            categoryNames[i] = categories.get(i).getName();
+        }
+
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryNames);
+        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategory.setAdapter(categoryAdapter);
+    }
+
     private void setupEditMode() {
-        titleText.setText("Edit Task");
+        titleText.setText(R.string.edit_task_title);
         etTaskTitle.setText(existingTask.getTitle());
         etDescription.setText(existingTask.getDescription());
         tvDueDate.setText(existingTask.getDueDate());
+        tvDueDate.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+
+        if (existingTask.getDueTime() != null && !existingTask.getDueTime().isEmpty()) {
+            tvDueTime.setText(existingTask.getDueTime());
+            tvDueTime.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        }
+
         switchTaskReminder.setChecked(existingTask.isReminderEnabled());
         
         // Set spinner selections
@@ -115,20 +152,48 @@ public class CreateTaskActivity extends AppCompatActivity {
         DatePickerBottomSheet datePicker = DatePickerBottomSheet.newInstance(currentDate, date -> {
             SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
             tvDueDate.setText(sdf.format(date));
+            tvDueDate.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
         });
         datePicker.show(getSupportFragmentManager(), "DatePicker");
+    }
+
+    private void showTimePicker() {
+        Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, (view, hourOfDay, minute1) -> {
+            Calendar cal = Calendar.getInstance();
+            cal.set(Calendar.HOUR_OF_DAY, hourOfDay);
+            cal.set(Calendar.MINUTE, minute1);
+            
+            SimpleDateFormat sdf = new SimpleDateFormat("h:mm a", Locale.ENGLISH);
+            tvDueTime.setText(sdf.format(cal.getTime()));
+            tvDueTime.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        }, hour, minute, false);
+        timePickerDialog.show();
     }
 
     private void saveTask() {
         String title = etTaskTitle.getText().toString().trim();
         String description = etDescription.getText().toString().trim();
         String dueDate = tvDueDate.getText().toString();
+        String dueTime = tvDueTime.getText().toString();
+        
+        // Don't save hint as date/time
+        if (dueDate.equals(getString(R.string.hint_due_date))) {
+            dueDate = "";
+        }
+        if (dueTime.equals(getString(R.string.hint_due_time))) {
+            dueTime = "";
+        }
+
         String priority = spinnerPriority.getSelectedItem().toString();
         String category = spinnerCategory.getSelectedItem().toString();
         boolean reminderEnabled = switchTaskReminder.isChecked();
 
         if (title.isEmpty()) {
-            Toast.makeText(this, "Please enter a title", Toast.LENGTH_SHORT).show();
+            ToastUtils.showCustomToast(this, getString(R.string.error_title_required));
             return;
         }
 
@@ -139,20 +204,24 @@ public class CreateTaskActivity extends AppCompatActivity {
             existingTask.setTitle(title);
             existingTask.setDescription(description);
             existingTask.setDueDate(dueDate);
+            existingTask.setDueTime(dueTime);
             existingTask.setPriority(priority);
             existingTask.setCategory(category);
             existingTask.setReminderEnabled(reminderEnabled);
             existingTask.setModifiedAt(now);
             
             taskDao.updateTask(existingTask);
-            ToastUtils.showCustomToast(this, "Task updated");
+            ReminderManager.setReminder(this, existingTask);
+            ToastUtils.showCustomToast(this, getString(R.string.toast_task_updated));
         } else {
-            Task newTask = new Task(0, title, description, dueDate, priority, category, false, reminderEnabled);
+            Task newTask = new Task(0, title, description, dueDate, dueTime, priority, category, false, reminderEnabled);
             newTask.setCreatedAt(now);
             newTask.setModifiedAt(now);
 
-            taskDao.addTask(newTask);
-            ToastUtils.showCustomToast(this, "Task created");
+            int id = (int) taskDao.addTask(newTask);
+            newTask.setId(id);
+            ReminderManager.setReminder(this, newTask);
+            ToastUtils.showCustomToast(this, getString(R.string.toast_task_created));
         }
 
         setResult(RESULT_OK);

@@ -20,6 +20,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.taskmanagementapp.adapter.TaskAdapter;
@@ -28,6 +30,9 @@ import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
+import com.example.taskmanagementapp.util.ReminderManager;
+import com.example.taskmanagementapp.util.SidebarManager;
 import com.example.taskmanagementapp.util.ToastUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,6 +46,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     private RecyclerView recyclerView;
     private TaskAdapter adapter;
     private TaskDao taskDao;
+    private DrawerLayout drawerLayout;
     private static final int REQUEST_CODE_CREATE_TASK = 101;
     
     private TextView filterAll, filterToday, filterOverdue;
@@ -51,6 +57,8 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     private String searchQuery = "";
     
     private View emptyStateLayout;
+    private SidebarManager sidebarManager;
+    private String sidebarFilter = "All";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +66,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         
         setContentView(R.layout.activity_task);
 
+        drawerLayout = findViewById(R.id.drawerLayout);
         taskDao = AppDatabase.getInstance(this).taskDao();
 
         // Setup RecyclerView
@@ -121,6 +130,13 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         loadTasks();
 
+        sidebarManager = new SidebarManager(this, drawerLayout);
+        sidebarManager.init();
+
+        if (getIntent().hasExtra("filter")) {
+            sidebarFilter = getIntent().getStringExtra("filter");
+        }
+
         // FAB to add task
         FloatingActionButton fab = findViewById(R.id.fabAddTask);
         if (fab != null) {
@@ -157,25 +173,20 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         // 2. top menu action
         ImageView btnMenu = findViewById(R.id.btnMenu);
         if (btnMenu != null) {
-            btnMenu.setOnClickListener(v ->
-                    Toast.makeText(TaskActivity.this, "Menu Clicked!", Toast.LENGTH_SHORT).show()
-            );
-        }
-
-        // 3. top settings icon action (Top Gear Icon)
-        ImageView settingsIcon = findViewById(R.id.settingsIcon);
-        if (settingsIcon != null) {
-            settingsIcon.setOnClickListener(v -> {
-                Intent intent = new Intent(TaskActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            });
+            btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (sidebarManager != null) sidebarManager.refreshCategoryTaskCounts();
         // Refresh the list whenever user returns to this activity
+        loadTasks();
+    }
+
+    public void applyFilterFromSidebar(String filter) {
+        this.sidebarFilter = filter;
         loadTasks();
     }
 
@@ -216,7 +227,19 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
                 }
             }
 
-            // Apply Chips Filter
+            // Apply Sidebar Filter
+            if (sidebarFilter.equals("Completed")) {
+                if (!task.isCompleted()) continue;
+            } else if (sidebarFilter.equals("Pending")) {
+                if (task.isCompleted()) continue;
+            } else if (!sidebarFilter.equals("All")) {
+                // It's a category name
+                if (task.getCategory() == null || !task.getCategory().equals(sidebarFilter)) {
+                    continue;
+                }
+            }
+
+            // Apply Chips Filter (Local filters)
             if (currentFilter.equals("All")) {
                 filteredTasks.add(task);
             } else {
@@ -306,9 +329,11 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
 
         dialogView.findViewById(R.id.btnCancel).setOnClickListener(v -> dialog.dismiss());
         dialogView.findViewById(R.id.btnDelete).setOnClickListener(v -> {
+            int id = task.getId();
             taskDao.deleteTask(task);
+            ReminderManager.cancelReminder(this, id);
             loadTasks();
-            ToastUtils.showCustomToast(this, "Task deleted");
+            ToastUtils.showCustomToast(this, getString(R.string.toast_task_deleted));
             dialog.dismiss();
         });
 
@@ -318,7 +343,7 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
     @Override
     public void onTaskDuplicate(Task task) {
         Task duplicatedTask = new Task(0, task.getTitle() + " (Copy)", 
-                task.getDescription(), task.getDueDate(), 
+                task.getDescription(), task.getDueDate(), task.getDueTime(),
                 task.getPriority(), task.getCategory(), false, task.isReminderEnabled());
         
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
@@ -326,9 +351,11 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         duplicatedTask.setCreatedAt(now);
         duplicatedTask.setModifiedAt(now);
 
-        taskDao.addTask(duplicatedTask);
+        int id = (int) taskDao.addTask(duplicatedTask);
+        duplicatedTask.setId(id);
+        ReminderManager.setReminder(this, duplicatedTask);
         loadTasks();
-        ToastUtils.showCustomToast(this, "Task duplicated");
+        ToastUtils.showCustomToast(this, getString(R.string.toast_task_duplicated));
     }
 
     @Override
@@ -336,18 +363,20 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy", Locale.ENGLISH);
         task.setModifiedAt(sdf.format(new Date()));
         taskDao.updateTask(task);
+        ReminderManager.setReminder(this, task);
         if (task.isCompleted()) {
-            ToastUtils.showCustomToast(this, "Task completed!");
+            ToastUtils.showCustomToast(this, getString(R.string.toast_task_completed));
         }
     }
 
     @Override
     public void onTaskReminderToggled(Task task) {
         taskDao.updateTask(task);
+        ReminderManager.setReminder(this, task);
         if (task.isReminderEnabled()) {
-            ToastUtils.showCustomToast(this, "Reminder turned on");
+            ToastUtils.showCustomToast(this, getString(R.string.toast_reminder_enabled));
         } else {
-            ToastUtils.showCustomToast(this, "Reminder turned off");
+            ToastUtils.showCustomToast(this, getString(R.string.toast_reminder_disabled));
         }
     }
 }

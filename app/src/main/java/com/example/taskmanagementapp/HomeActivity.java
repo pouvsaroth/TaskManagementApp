@@ -16,7 +16,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.taskmanagementapp.util.SidebarManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;
@@ -28,6 +31,8 @@ import java.util.Locale;
 public class HomeActivity extends AppCompatActivity {
 
     private TaskDao taskDao;
+    private DrawerLayout drawerLayout;
+    private SidebarManager sidebarManager;
     private TextView txtTotalCount, txtCompletedCount, txtPendingCount, txtOverdueCount;
     private TextView txtProgressPercent, txtDoneCount, txtToDoCount;
     private ProgressBar progressCircle;
@@ -41,6 +46,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        drawerLayout = findViewById(R.id.drawerLayout);
         taskDao = AppDatabase.getInstance(this).taskDao();
 
         // Initialize UI components
@@ -91,13 +97,16 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity(new Intent(HomeActivity.this, SettingsActivity.class)));
 
         // 3. Menu button
-        findViewById(R.id.btnMenu).setOnClickListener(v ->
-                Toast.makeText(HomeActivity.this, "Menu Clicked!", Toast.LENGTH_SHORT).show());
+        findViewById(R.id.btnMenu).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        sidebarManager = new SidebarManager(this, drawerLayout);
+        sidebarManager.init();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        if (sidebarManager != null) sidebarManager.refreshCategoryTaskCounts();
         updateDashboard();
     }
 

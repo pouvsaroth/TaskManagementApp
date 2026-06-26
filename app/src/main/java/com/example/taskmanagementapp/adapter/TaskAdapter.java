@@ -97,7 +97,13 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
         public void bind(Task task, OnTaskClickListener listener, boolean globalReminderEnabled) {
             tvTitle.setText(task.getTitle());
-            tvDate.setText(task.getDueDate());
+            
+            String displayDate = task.getDueDate();
+            if (task.getDueTime() != null && !task.getDueTime().isEmpty()) {
+                displayDate += ", " + task.getDueTime();
+            }
+            tvDate.setText(displayDate);
+
             tagPriority.setText(task.getPriority());
             tagCategory.setText(task.getCategory());
 
@@ -235,8 +241,9 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
                 Date today = calToday.getTime();
 
                 if (taskDate != null && taskDate.before(today) && !task.isCompleted()) {
-                    tvDate.setTextColor(Color.parseColor("#EF4444"));
-                    ivCalendarIcon.setImageTintList(ColorStateList.valueOf(Color.parseColor("#EF4444")));
+                    int redColor = ContextCompat.getColor(itemView.getContext(), R.color.icon_red);
+                    tvDate.setTextColor(redColor);
+                    ivCalendarIcon.setImageTintList(ColorStateList.valueOf(redColor));
                 } else {
                     tvDate.setTextColor(ContextCompat.getColor(itemView.getContext(), R.color.text_muted));
                     ivCalendarIcon.setImageTintList(ColorStateList.valueOf(ContextCompat.getColor(itemView.getContext(), R.color.text_muted)));

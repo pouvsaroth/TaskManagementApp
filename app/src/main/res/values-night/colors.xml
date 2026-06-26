@@ -1,7 +1,9 @@
 <resources>
     <color name="nav_background">#121212</color>
-    <color name="nav_icon_unselected">#8E8E93</color>
-    <color name="nav_unselected">#8E8E93</color>
+    <color name="nav_icon_unselected">#94A3B8</color>
+    <color name="nav_unselected">#94A3B8</color>
+    <color name="nav_selected">#38BDF8</color>
+    <color name="nav_divider_top">#1E293B</color>
     <color name="card_background_color">#1E222B</color>
 
     <color name="bg_icon_blue_dark">#162535</color>
@@ -9,29 +11,34 @@
     <color name="bg_icon_orange_dark">#2A241F</color>
     <color name="bg_icon_red_dark">#291B22</color>
 
-    <color name="bg_icon_blue_soft">#162535</color>
-    <color name="bg_icon_green_soft">#142923</color>
-    <color name="bg_icon_orange_soft">#2A241F</color>
-    <color name="bg_icon_red_soft">#291B22</color>
-    <color name="bg_icon_yellow_soft">#2A2A1A</color>
+    <!-- Refined Soft Colors for Dark Mode - slightly more saturated for better contrast -->
+    <color name="bg_icon_blue_soft">#1E3A5F</color>
+    <color name="bg_icon_green_soft">#1B3320</color>
+    <color name="bg_icon_orange_soft">#43301F</color>
+    <color name="bg_icon_red_soft">#45272E</color>
+    <color name="bg_icon_yellow_soft">#3D3D1F</color>
 
-    <color name="icon_blue">#4FC3F7</color>
-    <color name="icon_green">#81C784</color>
-    <color name="icon_orange">#FFB74D</color>
-    <color name="icon_yellow">#FFF176</color>
-    <color name="icon_red">#E57373</color>
+    <color name="icon_blue">#38BDF8</color>
+    <color name="icon_green">#4ADE80</color>
+    <color name="icon_orange">#FB923C</color>
+    <color name="icon_yellow">#FACC15</color>
+    <color name="icon_red">#F87171</color>
 
-    <color name="status_completed_bg">#142923</color>
-    <color name="status_completed_text">#81C784</color>
-    <color name="status_pending_bg">#2A241F</color>
-    <color name="status_pending_text">#FFB74D</color>
+    <color name="status_completed_bg">#1B3320</color>
+    <color name="status_completed_text">#4ADE80</color>
+    <color name="status_pending_bg">#43301F</color>
+    <color name="status_pending_text">#FB923C</color>
 
     <color name="progress_remaining_color">#2D323E</color>
     <color name="progress_track_color">#2D323E</color>
     <color name="app_main_background">#121212</color>
-    <color name="text_primary">#FFFFFF</color>
-    <color name="text_muted">#A1A1AA</color>
-    <color name="divider_color">#2D323E</color>
-    <color name="badge_border">#3F3F46</color>
-    <color name="filter_unselected_bg">#2D323E</color>
+    <color name="text_primary">#F8FAFC</color>
+    <color name="text_muted">#94A3B8</color>
+    <color name="text_link">#38BDF8</color>
+    <color name="text_red">#F87171</color>
+    <color name="divider_color">#1E293B</color>
+    <color name="badge_border">#334155</color>
+    <color name="popup_border">@color/nav_selected</color>
+    <color name="sidebar_right_border">@color/nav_selected</color>
+    <color name="filter_unselected_bg">#1E293B</color>
 </resources>

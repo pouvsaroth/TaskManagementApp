@@ -11,8 +11,11 @@
     <color name="brand_blue">#0288D1</color>
     <color name="text_muted">#666666</color>
     <color name="text_primary">#000000</color>
+    <color name="text_link">#0073aa</color>
     <color name="divider_color">#F0F2F5</color>
     <color name="badge_border">#D1D5DB</color>
+    <color name="popup_border">@android:color/transparent</color>
+    <color name="sidebar_right_border">@android:color/transparent</color>
     <color name="filter_unselected_bg">#F3F4F6</color>
 
     <color name="card_background_color">#F8F9FA</color>
@@ -49,4 +52,7 @@
     <color name="progress_remaining_color">#F0F2F5</color>
     <color name="progress_track_color">#F0F2F5</color>
     <color name="app_main_background">#FFFFFF</color>
+    <color name="splash_bg">#1E8CB8</color>
+    <color name="splash_text_secondary">#E0E0E0</color>
+    <color name="splash_footer_text">#B0E5F2</color>
 </resources>

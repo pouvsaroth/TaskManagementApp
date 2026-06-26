@@ -178,7 +178,7 @@ public class DatePickerBottomSheet extends BottomSheetDialogFragment {
                 tvDay.setTextColor(ContextCompat.getColor(context, R.color.text_muted));
                 tvDay.setAlpha(0.5f);
             } else {
-                tvDay.setTextColor(Color.BLACK);
+                tvDay.setTextColor(ContextCompat.getColor(context, R.color.text_primary));
                 tvDay.setAlpha(1.0f);
             }
 
