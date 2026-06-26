@@ -103,33 +103,37 @@ public class TaskDetailActivity extends AppCompatActivity {
         
         // Priority Badge
         tagPriority.setText("! " + task.getPriority());
-        int priorityBg;
+        int priorityBg, priorityText;
         if ("High".equals(task.getPriority())) {
             priorityBg = ContextCompat.getColor(this, R.color.bg_icon_red_soft);
+            priorityText = ContextCompat.getColor(this, R.color.icon_red);
         } else if ("Medium".equals(task.getPriority())) {
             priorityBg = ContextCompat.getColor(this, R.color.bg_icon_orange_soft);
+            priorityText = ContextCompat.getColor(this, R.color.icon_orange);
         } else {
             priorityBg = ContextCompat.getColor(this, R.color.bg_icon_blue_soft);
+            priorityText = ContextCompat.getColor(this, R.color.brand_blue);
         }
         tagPriority.setBackgroundTintList(ColorStateList.valueOf(priorityBg));
-        tagPriority.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        tagPriority.setTextColor(priorityText);
 
         tagCategory.setText(task.getCategory());
-        int catBg;
+        int catBg, catText;
         if ("Work".equals(task.getCategory())) {
             catBg = ContextCompat.getColor(this, R.color.bg_icon_blue_soft);
+            catText = ContextCompat.getColor(this, R.color.brand_blue);
         } else if ("Personal".equals(task.getCategory())) {
             catBg = ContextCompat.getColor(this, R.color.bg_icon_green_soft);
+            catText = ContextCompat.getColor(this, R.color.icon_green);
         } else if ("Study".equals(task.getCategory())) {
             catBg = ContextCompat.getColor(this, R.color.bg_icon_yellow_soft);
+            catText = ContextCompat.getColor(this, R.color.icon_orange); // Yellow often uses orange text for readability
         } else {
             catBg = ContextCompat.getColor(this, R.color.filter_unselected_bg);
+            catText = ContextCompat.getColor(this, R.color.text_primary);
         }
         tagCategoryContainer.setBackgroundTintList(ColorStateList.valueOf(catBg));
-        
-        // Text and Icon are always primary color (black in light mode)
-        int textColor = ContextCompat.getColor(this, R.color.text_primary);
-        tagCategory.setTextColor(textColor);
+        tagCategory.setTextColor(catText);
         
         cbComplete.setOnCheckedChangeListener(null);
         cbComplete.setChecked(task.isCompleted());
@@ -167,14 +171,14 @@ public class TaskDetailActivity extends AppCompatActivity {
             tvTaskTitle.setPaintFlags(tvTaskTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
             tvTaskTitle.setTextColor(ContextCompat.getColor(this, R.color.text_muted));
             tvStatus.setText(R.string.status_completed);
-            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
-            tvStatus.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_completed_bg)));
+            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.icon_green));
+            tvStatus.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.bg_icon_green_soft)));
         } else {
             tvTaskTitle.setPaintFlags(tvTaskTitle.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
             tvTaskTitle.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
             tvStatus.setText(R.string.status_pending);
-            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
-            tvStatus.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.status_pending_bg)));
+            tvStatus.setTextColor(ContextCompat.getColor(this, R.color.icon_orange));
+            tvStatus.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.bg_icon_orange_soft)));
         }
     }
 
