@@ -81,7 +81,8 @@
     <string name="label_task_title">Task Title</string>
     <string name="hint_task_title">Enter task title</string>
     <string name="hint_description">Add description (optional)</string>
-    <string name="hint_due_date">MMMM dd, yyyy</string>
+    <string name="hint_due_date">Select Date</string>
+    <string name="hint_due_time">Select Time</string>
     <string name="label_priority">Priority</string>
     <string name="label_category">Category</string>
     <string name="btn_cancel">Cancel</string>

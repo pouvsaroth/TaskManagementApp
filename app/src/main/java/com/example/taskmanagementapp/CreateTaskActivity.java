@@ -122,8 +122,17 @@ public class CreateTaskActivity extends AppCompatActivity {
         titleText.setText(R.string.edit_task_title);
         etTaskTitle.setText(existingTask.getTitle());
         etDescription.setText(existingTask.getDescription());
-        tvDueDate.setText(existingTask.getDueDate());
-        tvDueDate.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        
+        if (existingTask.getDueDate() != null && !existingTask.getDueDate().isEmpty()) {
+            tvDueDate.setText(existingTask.getDueDate());
+            tvDueDate.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        }
+
+        if (existingTask.getDueTime() != null && !existingTask.getDueTime().isEmpty()) {
+            tvDueTime.setText(existingTask.getDueTime());
+            tvDueTime.setTextColor(ContextCompat.getColor(this, R.color.text_primary));
+        }
+
         switchTaskReminder.setChecked(existingTask.isReminderEnabled());
         
         // Set spinner selections
@@ -178,6 +187,11 @@ public class CreateTaskActivity extends AppCompatActivity {
             dueDate = "";
         }
 
+        String dueTime = tvDueTime.getText().toString();
+        if (dueTime.equals(getString(R.string.hint_due_time))) {
+            dueTime = "";
+        }
+
         String priority = spinnerPriority.getSelectedItem().toString();
         String category = spinnerCategory.getSelectedItem().toString();
         boolean reminderEnabled = switchTaskReminder.isChecked();
@@ -201,13 +215,16 @@ public class CreateTaskActivity extends AppCompatActivity {
             existingTask.setModifiedAt(now);
             
             taskDao.updateTask(existingTask);
+            ReminderManager.setReminder(this, existingTask);
             ToastUtils.showCustomToast(this, getString(R.string.toast_task_updated));
         } else {
             Task newTask = new Task(0, title, description, dueDate, dueTime, priority, category, false, reminderEnabled);
             newTask.setCreatedAt(now);
             newTask.setModifiedAt(now);
 
-            taskDao.addTask(newTask);
+            int id = (int) taskDao.addTask(newTask);
+            newTask.setId(id);
+            ReminderManager.setReminder(this, newTask);
             ToastUtils.showCustomToast(this, getString(R.string.toast_task_created));
         }
 
