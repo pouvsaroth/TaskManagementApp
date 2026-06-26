@@ -175,15 +175,6 @@ public class TaskActivity extends AppCompatActivity implements TaskAdapter.OnTas
         if (btnMenu != null) {
             btnMenu.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         }
-
-        // 3. top settings icon action (Top Gear Icon)
-        ImageView settingsIcon = findViewById(R.id.settingsIcon);
-        if (settingsIcon != null) {
-            settingsIcon.setOnClickListener(v -> {
-                Intent intent = new Intent(TaskActivity.this, SettingsActivity.class);
-                startActivity(intent);
-            });
-        }
     }
 
     @Override
