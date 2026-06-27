@@ -1,6 +1,5 @@
-package com.example.taskmanagementapp;
+package com.example.taskmanagementapp.activities;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
@@ -11,20 +10,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.content.ContextCompat;
-import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.taskmanagementapp.R;
 import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
-import com.example.taskmanagementapp.util.ReminderManager;
-import com.example.taskmanagementapp.util.ToastUtils;
+import com.example.taskmanagementapp.Utilities.ReminderManager;
+import com.example.taskmanagementapp.Utilities.ToastUtils;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;

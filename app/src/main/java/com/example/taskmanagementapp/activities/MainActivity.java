@@ -1,4 +1,4 @@
-package com.example.taskmanagementapp;
+package com.example.taskmanagementapp.activities;
 
 import android.Manifest;
 import android.content.Intent;
@@ -12,6 +12,8 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+
+import com.example.taskmanagementapp.R;
 
 public class MainActivity extends AppCompatActivity {
     private static final int SPLASH_TIME_OUT = 3000;

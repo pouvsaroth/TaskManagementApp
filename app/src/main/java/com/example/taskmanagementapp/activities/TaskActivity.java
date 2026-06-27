@@ -1,4 +1,4 @@
-package com.example.taskmanagementapp;
+package com.example.taskmanagementapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Toast;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -24,16 +23,17 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.taskmanagementapp.R;
 import com.example.taskmanagementapp.adapter.TaskAdapter;
 import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.TaskDao;
 import com.example.taskmanagementapp.model.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.navigation.NavigationView;
-import com.example.taskmanagementapp.util.ReminderManager;
-import com.example.taskmanagementapp.util.SidebarManager;
-import com.example.taskmanagementapp.util.ToastUtils;
+import com.example.taskmanagementapp.Utilities.ReminderManager;
+import com.example.taskmanagementapp.Utilities.SidebarManager;
+import com.example.taskmanagementapp.Utilities.ToastUtils;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;

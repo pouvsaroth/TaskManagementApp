@@ -18,7 +18,7 @@
         android:theme="@style/Theme.TaskManagementApp">
 
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,29 +27,29 @@
         </activity>
 
         <activity
-            android:name=".HomeActivity"
+            android:name=".activities.HomeActivity"
 
             android:exported="false" />
 
         <activity
-            android:name=".SettingsActivity"
+            android:name=".activities.SettingsActivity"
             android:exported="false" />
 
         <activity
-            android:name=".TaskActivity"
+            android:name=".activities.TaskActivity"
             android:exported="false" />
 
         <activity
-            android:name=".CreateTaskActivity"
+            android:name=".activities.CreateTaskActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
         <activity
-            android:name=".TaskDetailActivity"
+            android:name=".activities.TaskDetailActivity"
             android:exported="false" />
 
-        <receiver android:name=".util.ReminderReceiver" android:exported="false" />
-        <receiver android:name=".util.BootReceiver" android:exported="true">
+        <receiver android:name=".Utilities.ReminderReceiver" android:exported="false" />
+        <receiver android:name=".Utilities.BootReceiver" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>

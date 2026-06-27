@@ -1,4 +1,4 @@
-package com.example.taskmanagementapp.util;
+package com.example.taskmanagementapp.Utilities;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
@@ -8,7 +8,6 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import com.example.taskmanagementapp.model.Task;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 

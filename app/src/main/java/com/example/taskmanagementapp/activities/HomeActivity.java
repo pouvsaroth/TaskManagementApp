@@ -1,4 +1,4 @@
-package com.example.taskmanagementapp;
+package com.example.taskmanagementapp.activities;
 
 import com.example.taskmanagementapp.R;
 import com.example.taskmanagementapp.database.AppDatabase;
@@ -9,17 +9,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.example.taskmanagementapp.util.SidebarManager;
+import com.example.taskmanagementapp.Utilities.SidebarManager;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.text.SimpleDateFormat;

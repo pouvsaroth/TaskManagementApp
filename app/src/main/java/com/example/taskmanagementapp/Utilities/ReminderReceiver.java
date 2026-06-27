@@ -1,4 +1,4 @@
-package com.example.taskmanagementapp.util;
+package com.example.taskmanagementapp.Utilities;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -8,7 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import androidx.core.app.NotificationCompat;
-import com.example.taskmanagementapp.MainActivity;
+import com.example.taskmanagementapp.activities.MainActivity;
 import com.example.taskmanagementapp.R;
 
 public class ReminderReceiver extends BroadcastReceiver {

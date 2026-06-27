@@ -1,4 +1,4 @@
-package com.example.taskmanagementapp.util;
+package com.example.taskmanagementapp.Utilities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -22,10 +22,10 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-import com.example.taskmanagementapp.HomeActivity;
+import com.example.taskmanagementapp.activities.HomeActivity;
 import com.example.taskmanagementapp.R;
-import com.example.taskmanagementapp.SettingsActivity;
-import com.example.taskmanagementapp.TaskActivity;
+import com.example.taskmanagementapp.activities.SettingsActivity;
+import com.example.taskmanagementapp.activities.TaskActivity;
 import com.example.taskmanagementapp.adapter.CategoryAdapter;
 import com.example.taskmanagementapp.database.AppDatabase;
 import com.example.taskmanagementapp.database.CategoryDao;
